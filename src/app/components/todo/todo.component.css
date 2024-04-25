@@ -1,0 +1,62 @@
+.todo-list-wrapper{
+  @apply bg-background-200 p-10 mt-8 rounded-lg mx-auto w-fit
+}
+
+.title{
+  @apply text-2xl font-bold text-center
+}
+
+.new-todo{
+  @apply flex justify-center mt-4 gap-2 min-w-32
+}
+
+.new-todo input{
+  @apply py-2 rounded-lg w-full text-black p-6
+}
+
+.new-todo button{
+  @apply text-sm font-bold text-white text-[25px] px-4 rounded-lg bg-green-500 hover:bg-green-600
+}
+
+.filters{
+  @apply flex justify-center mt-4 gap-7
+}
+.filters button{
+  @apply text-sm font-bold text-white px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600
+}
+.filters button.active{
+  @apply bg-red-600
+}
+
+.todoList{
+  @apply flex flex-col mt-4
+}
+
+.todo-item{
+  @apply flex justify-around items-center bg-background-300 p-4 rounded-lg text-[18px]
+}
+
+.todo-item .todo-text{
+  @apply w-3/5
+}
+.todo-item .acciones{
+  @apply flex gap-3
+
+}
+
+.todo-item input{
+  @apply w-5 h-5
+}
+
+.todo-item .delete{
+  @apply text-red-500 hover:text-red-600
+}
+.todo-item .edit{
+  @apply text-green-500 hover:text-green-600
+}
+
+.todo-editing{
+  @apply text-black flex justify-around items-center bg-background-300 p-4 rounded-lg text-[18px] gap-5
+}
+
+
