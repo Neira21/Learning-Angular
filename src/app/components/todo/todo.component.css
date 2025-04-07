@@ -58,5 +58,3 @@
 .todo-editing{
   @apply text-black flex justify-around items-center bg-background-300 p-4 rounded-lg text-[18px] gap-5
 }
-
-

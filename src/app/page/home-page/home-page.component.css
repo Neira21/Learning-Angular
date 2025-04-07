@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 8%;
+}
+
+.container .toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+.drawer-container__drawer{
+  width: 20%;
+}
+
+.container .toolbar__spacer {
+  flex: 1 1 auto;
+}
+
+.drawer-container {
+  flex: 1;
+  margin-top: 4.5em;  ;
+}
+
+.drawer-container__content {
+  padding: 12px;
+}
+
+.drawer-container__content .products {
+  display: grid;
+  gap: 3em;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+}

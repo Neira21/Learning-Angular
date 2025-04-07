@@ -1,0 +1,45 @@
+<section class="todos_component">
+  <div>
+    <select
+      style="background-color: black; color: white"
+      (change)="onSelectChange($event)"
+    >
+    @for (todo of ListObject; track todo.key){
+      <option [value]="todo.key">
+        {{ todo.value }}
+      </option>
+    }
+    </select>
+  </div>
+
+
+
+  <div style="margin-top: 10px">
+    @for (todo of filteredTodos; track todo.id; let index = $index){
+      <div
+        style="display: flex; justify-content: space-between; padding: 10px"
+        [ngStyle]="{
+          'color': todo.completed ? '#292929' : 'red',
+          'background-color': index % 2 === 0 ? 'gray' : '#C6C9D1'
+        }"
+
+      >
+        <p>{{ todo.title }}</p>
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          style="
+            color: white;
+            background-color: blue;
+            padding: 2px;
+            border-radius: 10%;
+          "
+          (change)="toggleCompleted(todo)"
+        />
+      </div>
+    }
+
+
+  </div>
+
+</section>

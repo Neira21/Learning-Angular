@@ -1,0 +1,25 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.header__title {
+	font-weight: bold;
+}
+
+.header__hour {
+	color: #707eae;
+	font-size: 10px;
+}
+
+.header-user {
+	display: flex;
+	gap: 1em;
+	align-items: flex-start;
+}
+
+.header-user__user {
+	width: 48px;
+	height: 48px;
+}
