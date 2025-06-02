@@ -11,7 +11,7 @@ export class ContainerComponent {
 
   //array de objetos con el interface TodoModel
   todos: TodoModel[] = [
-    { id: 1, title: 'Tarea 1', completed: true },
+    { id: 1, title: 'Tarea Nueva', completed: true },
     { id: 2, title: 'Tarea 2', completed: true },
     { id: 3, title: 'Tarea 3', completed: false },
     { id: 4, title: 'Tarea 4', completed: true },

@@ -6,6 +6,7 @@ import { PokemonComponent } from './components/pokemon/pokemon.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
 import { ContainerModule } from './container/container.module';
 import { FormangularComponent } from './components/formangular/formangular.component';
+import { ObserverComponent } from './observer/observer.component';
 
 export const routes: Routes = [
 
@@ -19,5 +20,7 @@ export const routes: Routes = [
 
   {path: 'store', component: HomePageComponent},
 
-  {path: 'form', component: FormangularComponent}
+  {path: 'form', component: FormangularComponent},
+
+  {path: 'observer', component: ObserverComponent}
 ];

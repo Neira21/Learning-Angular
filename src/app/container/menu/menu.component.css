@@ -1,6 +1,8 @@
 .menu {
-	background-color: green;
+	border: 1px solid #00dea3;
+  border-radius: 10px;
 	height: 100%;
+  min-width: 150px;;
 }
 
 .menu-ul {

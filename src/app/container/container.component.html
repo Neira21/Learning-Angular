@@ -29,7 +29,7 @@
 
       <section>
         <select
-          style="background-color: black; color: white"
+          style="background-color: black; color: white; font-size:20px;"
           (change)="onSelectChange($event)"
         >
           <option *ngFor="let item of ListObject" [value]="item.key">
@@ -38,9 +38,9 @@
         </select>
       </section>
 
-      <div style="margin-top: 10px">
+      <div style="margin-top: 10px; padding: 10px">
         <div
-          style="display: flex; justify-content: space-between; padding: 10px"
+          style="display: flex; justify-content: space-between; padding: 10px; font-size: 20px;"
           *ngFor="let item of filteredTodos; let isOdd = odd; let isEven = even"
           [ngStyle]="{
             color: item.completed ? '#292929' : 'red',
@@ -52,6 +52,8 @@
             type="checkbox"
             [checked]="item.completed"
             style="
+              width: 30px;
+              height: 30px;
               color: white;
               background-color: blue;
               padding: 2px;
