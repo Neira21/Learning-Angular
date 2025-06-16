@@ -11,7 +11,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ProductsApiService } from '../../services/products-api.service';
 import { iDetailProduct, iStore } from '../../models/store.interface';
 import { CartService } from '../../services/cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -24,15 +24,21 @@ import { ActivatedRoute } from '@angular/router';
     MatSidenavModule,
     ProductComponent,
     NgFor,
-    NgIf
+    NgIf,
+    RouterLink
+
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
 
+  //user para recibir el user desde la ruta
+  //tiene que tener el mismo nombre que el de la ruta para que capture el valor
   @Input() user?: string;
 
+  // inyectamos el ActivatedRoute para obtener los valores de la ruta
+  // y poder pintar el input user
   private readonly _activeRouter = inject(ActivatedRoute);
 
 
@@ -53,7 +59,11 @@ export class HomePageComponent implements OnInit {
     this._getValuesRoutes();
 
 
-    this._productApiService.getProducts().subscribe((data) => (this.products = data));
+    this._productApiService.getProducts().subscribe((data) => {
+      console.log('Products from API:', data);
+      this.products = data
+    });
+
 
     this._cartService.cartObservable$.subscribe({
       next: (number) => (this.count = number),

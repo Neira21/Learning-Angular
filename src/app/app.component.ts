@@ -5,7 +5,7 @@ import { ContainerModule } from './container/container.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { prueba } from './prueba';
 
 @Component({
   selector: 'app-root',

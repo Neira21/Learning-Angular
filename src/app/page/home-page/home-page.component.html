@@ -1,6 +1,6 @@
 <div class="container "  >
 	<mat-toolbar color="primary" class="toolbar">
-		<span>My App</span>
+		<span routerLink="/" style="cursor: pointer;">My App</span>
 		<span class="toolbar__spacer"></span>
 
 		<button mat-icon-button class="favorite-icon" (click)="drawer.toggle()">
@@ -58,7 +58,7 @@
       </ng-template>
     </mat-drawer>
 
-		<mat-drawer-content class="drawer-container__content ">
+		<mat-drawer-content class="drawer-container__content">
 			<h1>Lista de productos</h1>
 			<div class="products">
 				<!-- La razón por la que aparenta hacer un bucle infinito, es que Angular ejecuta la detección de cambios

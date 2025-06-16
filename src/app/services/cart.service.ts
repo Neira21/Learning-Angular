@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { iDetailProduct, iStore } from '../models/store.interface';
 import { Subject } from 'rxjs';
 
+//el subject de rxjs es un tipo de observable que permite emitir valores y ser observado por otros componentes
+//es útil para crear un flujo de datos entre componentes sin necesidad de usar un servicio de estado global
+//en este caso, usamos un subject para emitir la lista de productos del carrito, el contador del carrito y la cantidad total del carrito
+
 @Injectable({
   providedIn: 'root'
 })

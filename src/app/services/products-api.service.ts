@@ -7,10 +7,8 @@ import { iStore } from '../models/store.interface';
 })
 export class ProductsApiService {
 
-
+  //injectamos el HttpClient para hacer peticiones HTTP
   httpClient = inject(HttpClient)
-
-  constructor() { }
 
   private readonly URL_PRODUCTS = 'https://fakestoreapi.com/products'
 
