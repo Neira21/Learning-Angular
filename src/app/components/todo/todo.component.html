@@ -1,16 +1,32 @@
 <section class="todo-list-wrapper">
-
   <h1 class="title">ToDo App</h1>
   <div class="new-todo">
-    <input (keydown.enter) = "addTodo()" type="text" placeholder="Nueva Tarea" [formControl]="newTodo" >
+    <input
+      (keydown.enter)="addTodo()"
+      type="text"
+      placeholder="Nueva Tarea"
+      [formControl]="newTodo"
+    />
 
     <button (click)="addTodo()">+</button>
   </div>
-  {{ newTodo.valid | json }}
+
+  <p style="color: wheat">
+    {{ newTodo.valid | json }}
+
+    @if (newTodo.valid) { La tarea es válida } @else { La tarea no es válida }
+  </p>
+
   <div class="filters">
-    <button (click)="changeFilter('all')" [class.active]="filter() === 'all'" >Todas</button>
-    <button (click)="changeFilter('actives')" [class.active]="filter() === 'actives'" >Activos</button>
-    <button (click)="changeFilter('completed')" [class.active]="filter() === 'completed'" >Completados</button>
+    @for (f of filters; track f.value) {
+    <button
+      style="cursor: pointer;"
+      (click)="changeFilter(f.value)"
+      [class.active]="filter() === f.value"
+    >
+      {{ f.label }}
+    </button>
+  }
   </div>
 
   <ul class="todoList">
@@ -18,32 +34,42 @@
 
     @for (todo of todoListFiltered(); track todo.id ){
 
-      <!-- Editando -->
-      @if(todo.editing){
-        <li class="todo-editing">
-          <input type="text" placeholder="Editar Tarea" [value]="todo.title" #editedTitle
-          (keydown.enter)="saveTitleTodo(todo.id, $event)">
+    <!-- Editando -->
+    @if(todo.editing){
+    <li class="todo-editing">
+      <input
+        type="text"
+        placeholder="Editar Tarea"
+        [value]="todo.title"
+        #editedTitle
+        (keydown.enter)="saveTitleTodo(todo.id, $event)"
+      />
 
-          <button class="cancel">Cancelar</button>
-        </li>
-      } @else{
-        <li class="todo-item">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <input type="checkbox" [checked]="todo.completed" (click)="toggleTodo(todo.id)" >
-            <span class="todo-text">{{todo.title}}</span>
-          </div>
-          <div class="acciones">
-            @if(!todo.completed){
-              <button (click) = "updateTodoEditingMode(todo.id)" class="edit">Editar</button>
-            }
-            <button (click)="removeTodo(todo.id)" class="delete">Eliminar</button>
-          </div>
-        </li>
-      }
-    }
+      <button class="cancel">Cancelar</button>
+    </li>
+    } @else{
+    <li>
+        {{ todo.id | date: 'medium' }}
+    </li>
 
-
-
+    <li class="todo-item">
+      <div style="display: flex; align-items: center; gap: 10px">
+        <input
+          type="checkbox"
+          [checked]="todo.completed"
+          (click)="toggleTodo(todo.id)"
+        />
+        <span class="todo-text">{{ todo.title }}</span>
+      </div>
+      <div class="acciones">
+        @if(!todo.completed){
+        <button (click)="updateTodoEditingMode(todo.id)" class="edit">
+          Editar
+        </button>
+        }
+        <button (click)="removeTodo(todo.id)" class="delete">Eliminar</button>
+      </div>
+    </li>
+    } }
   </ul>
-
 </section>

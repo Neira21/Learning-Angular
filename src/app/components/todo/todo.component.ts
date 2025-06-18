@@ -15,6 +15,12 @@ export class TodoComponent implements OnInit {
 
   filter = signal<filterType>('all')
 
+  filters: { label: string; value: filterType }[] = [
+  { label: 'Todas', value: 'all' },
+  { label: 'Activos', value: 'actives' },
+  { label: 'Completados', value: 'completed' }
+];
+
   todoListFiltered = computed(()=>{
     const filter = this.filter()
     const todos = this.todoList()
@@ -70,10 +76,8 @@ export class TodoComponent implements OnInit {
           newTodo
         ]
       })
-      this.newTodo.reset()
-    } else {
-      this.newTodo.setValue('')
     }
+    this.newTodo.reset()
   }
 
   toggleTodo = (id: number) => {
