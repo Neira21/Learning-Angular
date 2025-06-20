@@ -21,3 +21,7 @@
 .card__content {
   flex: 1;
 }
+
+.drawer-container__drawer{
+  background-color: red;
+}

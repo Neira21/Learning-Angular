@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, input } from '@angular/core';
+import { Component, Input, OnInit, inject, input, effect } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -51,6 +51,9 @@ export class HomePageComponent implements OnInit {
 
   productsInCart: iDetailProduct[] = [];
 
+  hasError = false;
+
+
 
 
   ngOnInit(): void {
@@ -58,10 +61,15 @@ export class HomePageComponent implements OnInit {
 
     this._getValuesRoutes();
 
-
-    this._productApiService.getProducts().subscribe((data) => {
-      console.log('Products from API:', data);
-      this.products = data
+    this._productApiService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data as iStore[];
+        console.log('Products from API:', this.products);
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+        this.hasError = true;
+      },
     });
 
 
@@ -70,7 +78,10 @@ export class HomePageComponent implements OnInit {
     });
 
     this._cartService.productObservable$.subscribe({
-      next: (products) => (this.productsInCart = products),
+      next: (products) => {
+        console.log('Products in cart:', products);
+        this.productsInCart = products
+      },
     });
     this._cartService.totalObservable$.subscribe(cost => {
       this.totalCost = cost;

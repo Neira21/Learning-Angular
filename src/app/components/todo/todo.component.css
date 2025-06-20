@@ -30,15 +30,17 @@
 }
 
 .todoList{
-  @apply flex flex-col mt-4;
+  @apply flex flex-col mt-4 overflow-y-auto;
+  max-height: 340px;
   color: white;
 
 }
 
 .todo-item{
-  @apply bg-background-300 p-4 rounded-lg text-[18px];
+  @apply bg-background-100 p-4 rounded-lg text-[18px];
   display: flex;
   justify-content: space-between;
+
 }
 
 .todo-item .todo-text{
