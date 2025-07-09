@@ -1,0 +1,48 @@
+<p>pokemon works!</p>
+
+<button mat-raised-button color="primary" (click)="toggleModal()">
+  Agregar Pokemon
+</button>
+<button mat-raised-button color="accent" (click)="clickRestaurar()">
+  Restaurar Pokemons
+</button>
+
+<div class="bg-black text-green-300 flex">
+  <mat-nav-list class="w-1/3 bg-gray-800 text-white p-4">
+    @for (pokemon of pokemons; track $index) {
+
+    <mat-list-item (click)="detallePokemon(pokemon)">
+      <div class="flex items-center gap-4">
+        <img src="assets/pokebola.png" width="30" alt="" />
+        <span>{{ pokemon.nombre }}</span>
+      </div>
+    </mat-list-item>
+    }
+  </mat-nav-list>
+
+  <!-- el eliminarPokemons osea el de la izquierda debe tener
+   el mismo nombre que el metodo del hijo
+
+   El de la derecha es el metodo del padre
+
+   (eliminarPokemons)="eliminarPokemon($event)"
+
+   el $event es el pokemon que se envia desde el hijo
+   -->
+
+  <app-pokemondetails
+    class="w-2/3 h-auto"
+    [pokemon]="pokemonSelected"
+    (eliminarPokemons)="eliminarPokemon($event)"
+  />
+
+</div>
+
+
+@if(showModal){
+  <app-pokemonmodal
+    (modalToggle) = "toggleModal()"
+    (agregarPokemonHijo)="agregarPokemon($event)"
+  />
+}
+

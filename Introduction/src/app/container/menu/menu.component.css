@@ -1,0 +1,23 @@
+.menu {
+	border: 1px solid #00dea3;
+  border-radius: 10px;
+	height: 100%;
+  min-width: 150px;;
+}
+
+.menu-ul {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	padding: 20px;
+	margin: 0;
+}
+
+.menu-ul__item {
+	cursor: pointer;
+}
+
+.menu-ul__item:hover {
+	color: #00dea3;
+}
+
