@@ -1,4 +1,226 @@
-<p>pokemon works!</p>
+<style>
+  h1 {
+    color: #2563eb;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .card {
+    min-width: 280px;
+    height: 200px;
+    margin: 15px;
+    display: flex;
+    align-items: stretch;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: 2px solid #e5e7eb;
+  }
+
+  .card:hover {
+    box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+  }
+
+  .left {
+    flex: 1.2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .left h1 {
+    color: white;
+    font-size: 1.4rem;
+    margin: 0 0 15px 0;
+    text-transform: capitalize;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .left img {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  }
+
+  .left img:hover {
+    transform: scale(1.1);
+  }
+
+  .right {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    transition: all 0.3s ease;
+  }
+
+  .right:hover {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  }
+
+  .right img {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  }
+
+  .right:hover img {
+    transform: rotate(360deg) ;
+  }
+  button{
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+  }
+
+  button:hover {
+    background-color: #1d4ed8;
+  }
+
+  .pokemon-details-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8fafc;
+    border-radius: 15px;
+    border: 2px solid #e2e8f0;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+
+</style>
+
+<h1>Lista de pokemon</h1>
+<button (click)="clickRestaurar()">Restaurar</button>
+<div class="container">
+@for(pokemon of pokemons; track pokemon.nombre){
+  <div class="card">
+    <div class="left">
+      <h1>
+        {{pokemon.nombre}}
+      </h1>
+      <img src="{{pokemon.imagen}}" width="100" alt="pokemon" />
+
+    </div>
+
+    <div class="right">
+      <img src="assets/pokebola.png" alt="pokebola " width="100" height="auto" (click)="clickpokebola(pokemon)" />
+    </div>
+
+
+  </div>
+}
+</div>
+
+<div class="pokemon-details-container">
+  <app-pokemondetails
+    [pokemon]="pokemonSelected"
+    (eliminarPokemons) = "deletePokemon($event)"
+  />
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <button mat-raised-button color="primary" (click)="toggleModal()">
   Agregar Pokemon
@@ -20,7 +242,7 @@
     }
   </mat-nav-list>
 
-  <!-- el eliminarPokemons osea el de la izquierda debe tener
+  el eliminarPokemons osea el de la izquierda debe tener
    el mismo nombre que el metodo del hijo
 
    El de la derecha es el metodo del padre
@@ -28,7 +250,7 @@
    (eliminarPokemons)="eliminarPokemon($event)"
 
    el $event es el pokemon que se envia desde el hijo
-   -->
+
 
   <app-pokemondetails
     class="w-2/3 h-auto"
@@ -45,4 +267,4 @@
     (agregarPokemonHijo)="agregarPokemon($event)"
   />
 }
-
+ -->

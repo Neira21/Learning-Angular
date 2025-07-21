@@ -15,29 +15,70 @@ import { PokemonmodalComponent } from './pokemonmodal/pokemonmodal.component';
   styleUrl: './pokemon.component.css',
 })
 export class PokemonComponent {
-  pokemons = [...POKEMONS];
+
+
+  pokemons: ipokemon[] = [...POKEMONS];
   pokemonSelected?: ipokemon;
-  showModal: boolean = false;
 
-  toggleModal():void{
-    this.showModal = !this.showModal;
-  }
-
-  clickRestaurar(): void {
-    this.pokemons = [...POKEMONS];
-  }
-
-  agregarPokemon(pokemon:ipokemon): void {
-    this.pokemons.push(pokemon);
-    console.log("lista de pokemon", this.pokemons);
-  }
-
-  detallePokemon(pokemon: ipokemon): void {
+  clickpokebola(pokemon: ipokemon): void {
     this.pokemonSelected = pokemon;
   }
 
-  eliminarPokemon(pokemon: ipokemon): void {
-    this.pokemons = this.pokemons.filter((p) => p !== pokemon);
+  clickRestaurar(): void {
+    console.log("aca")
+    this.pokemons = [...POKEMONS];
+  }
+
+  deletePokemon(pokemon: ipokemon): void {
+    const index = this.pokemons.indexOf(pokemon);
+    if (index > -1) {
+      this.pokemons.splice(index, 1);
+    }
     this.pokemonSelected = undefined;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // pokemons = [...POKEMONS];
+  // pokemonSelected?: ipokemon;
+  // showModal: boolean = false;
+
+  // toggleModal():void{
+  //   this.showModal = !this.showModal;
+  // }
+
+  // clickRestaurar(): void {
+  //   this.pokemons = [...POKEMONS];
+  // }
+
+  // agregarPokemon(pokemon:ipokemon): void {
+  //   this.pokemons.push(pokemon);
+  //   console.log("lista de pokemon", this.pokemons);
+  // }
+
+  // detallePokemon(pokemon: ipokemon): void {
+  //   this.pokemonSelected = pokemon;
+  // }
+
+  // eliminarPokemon(pokemon: ipokemon): void {
+  //   this.pokemons = this.pokemons.filter((p) => p !== pokemon);
+  //   this.pokemonSelected = undefined;
+  // }
 }

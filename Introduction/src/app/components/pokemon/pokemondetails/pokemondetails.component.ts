@@ -11,8 +11,61 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './pokemondetails.component.css',
 })
 export class PokemondetailsComponent {
-  @Input({ required: true }) pokemon?: ipokemon;
+
+  @Input() pokemon?: ipokemon;
+
 
   @Output() eliminarPokemons = new EventEmitter<ipokemon>();
+
+  deletePokemon(): void{
+    if (this.pokemon) {
+      this.eliminarPokemons.emit(this.pokemon);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // @Input({ required: true }) pokemon?: ipokemon;
+
+  // @Output() eliminarPokemons = new EventEmitter<ipokemon>();
 
 }
