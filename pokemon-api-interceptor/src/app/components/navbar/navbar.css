@@ -1,0 +1,116 @@
+
+.navbar {
+  background: #3b82f6;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  height: 60px;
+}
+
+/* Logo y marca */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Menú simple */
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Búsqueda simple */
+.navbar-search {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  outline: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  width: 180px;
+  border-radius: 20px;
+}
+
+.search-input::placeholder {
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 1rem;
+  }
+
+  .navbar-menu {
+    gap: 1rem;
+  }
+
+  .search-input {
+    width: 120px;
+  }
+
+  .brand-text {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-menu {
+    display: none;
+  }
+
+  .search-input {
+    width: 100px;
+  }
+
+  .brand-text {
+    font-size: 1.1rem;
+  }
+
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+}
