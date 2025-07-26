@@ -1,4 +1,9 @@
-<div>
-  <p>{{ errorMessage }}</p>
-</div>
+
+@if(errorMessage) {
+  <div>
+    <h2>Error {{ errorMessage.status }}: {{ errorMessage.name }}</h2>
+    <p>{{ errorMessage.message }}</p>
+  </div>
+}
+
 
