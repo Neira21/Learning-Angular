@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { iresponse } from '../interfaces/results';
-import { catchError, Observable, throwError } from 'rxjs';
-import { Error } from '../interfaces/error';
+import { Observable } from 'rxjs';
+
 
 
 
@@ -17,5 +17,9 @@ export class PokemonService {
   http = inject(HttpClient);
   getPokemonList():Observable<iresponse> {
     return this.http.get<iresponse>(`${this.apiUrl}/pokemon?limit=10&&offset=0`)
+  }
+
+  getPokemonByName(name:string): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/pokemon/${name}`)
   }
 }

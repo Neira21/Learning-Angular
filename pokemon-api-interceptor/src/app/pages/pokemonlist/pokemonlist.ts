@@ -24,7 +24,6 @@ export class Pokemonlist {
   public errorMessage = signal<Error | null>(null)
 
   ngOnInit(): void {
-
     this.pokemonResult$ = this.servicePokemon.getPokemonList().pipe(catchError((error: Error) => {
       this.errorMessage.set(error);
       return EMPTY

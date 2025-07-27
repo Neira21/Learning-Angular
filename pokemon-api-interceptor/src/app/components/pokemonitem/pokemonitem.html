@@ -1,5 +1,88 @@
 @if(pokemonInfo){
-  <div>
-    {{ pokemonInfo.name }}
-  </div>
+  <!-- 🎯 UNA SOLA llamada al async pipe -->
+  @if(pokemon$ | async; as pokemon) {
+    <div class="pokemon-card">
+      <img
+        [src]="pokemon.image"
+        [alt]="pokemon.name"
+        class="pokemon-image"
+        width="200"
+        height="200"
+      />
+      <button class="details-btn" (click)="toggleDetails()">
+        {{ showDetails ? 'Ocultar Detalles' : 'Ver Más Detalles' }}
+      </button>
+    </div>
+
+    <!-- 🎯 Modal usa la MISMA variable 'pokemon' -->
+    @if(showDetails) {
+      <div class="pokemon-details-wrapper">
+        <div class="pokemon-details">
+          <button class="close-btn" (click)="closeDetails()">✕</button>
+
+          <div class="detail-content">
+            <h4>📊 Estadísticas de {{ pokemon.name | titlecase }}</h4>
+
+            <img
+              [src]="pokemon.image"
+              [alt]="pokemon.name"
+              class="modal-pokemon-image"
+              width="150"
+              height="150"
+            />
+
+            <div class="detail-row">
+              <strong>📏 Altura:</strong> {{ pokemon.height / 10 }} m
+            </div>
+
+            <div class="detail-row">
+              <strong>⚖️ Peso:</strong> {{ pokemon.weight / 10 }} kg
+            </div>
+
+            <div class="detail-row">
+              <strong>⭐ Experiencia base:</strong>
+              {{ pokemon.baseExperience }}
+            </div>
+
+            <div class="detail-row">
+              <strong>🏷️ Tipos:</strong>
+              @for(type of pokemon.types; track type) {
+                <span class="type-badge">{{ type | titlecase }}</span>
+              }
+            </div>
+
+            <div class="detail-row">
+              <strong>💪 Habilidades:</strong>
+              @for(ability of pokemon.abilities; track ability) {
+                <span class="ability-badge">{{ ability | titlecase }}</span>
+              }
+            </div>
+            <div class="stats-section">
+              <strong>📈 Estadísticas:</strong>
+              @for(stat of pokemon.stats; track stat.stat.name) {
+                <div class="stat-bar">
+                  <span class="stat-name">{{ stat.stat.name | titlecase }}:</span>
+                  <div class="stat-progress">
+                    <div
+                      class="stat-fill"
+
+                      [style.width.%]="(stat.base_stat / 255) * 100"
+                    ></div>
+                    <span class="stat-value">{{ stat.base_stat }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <!-- Loading state -->
+    <div class="pokemon-card">
+      <div class="loading-placeholder">
+        <p>Cargando Pokemon...</p>
+      </div>
+    </div>
+  }
 }
