@@ -1,0 +1,116 @@
+<main>
+  <h1>{{ title() }}</h1>
+  <section>
+    <!-- ✅ Formulario siempre presente -->
+    <form>
+      <label for="location">Enter Location:</label>
+      <input
+        type="text"
+        id="location"
+        [(ngModel)]="location"
+        name="location"
+      />
+      <button type="button" (click)="getLocationWeather()">Get Weather</button>
+    </form>
+
+    <!-- ✅ Contenedor para estados dinámicos -->
+    <div class="weather-container">
+      @if(isLoading()) {
+        <div class="loading">
+          <p>🔄 Obteniendo clima de {{ location() }}...</p>
+          <div class="loading-spinner">⏳</div>
+        </div>
+      }
+      @if(weatherData(); as weather) {
+        <div id="weather">
+          <h2>🌤️ Información del Clima</h2>
+          <div class="weather-details">
+            <div class="location-info">
+              <h3>📍 {{ location() }}</h3>
+              <p class="coordinates">
+                <strong>Coordenadas:</strong> {{ coordinates().lat.toFixed(2) }}°, {{ coordinates().lon.toFixed(2) }}°
+              </p>
+            </div>
+
+            @if(weather.current) {
+              <div class="current-weather">
+                <h4>🌡️ Clima Actual</h4>
+                <div class="weather-grid">
+                  <div class="weather-item">
+                    <span class="weather-label">Temperatura:</span>
+                    <span class="weather-value temperature">{{ weather.current.temperature_2m }}°C</span>
+                  </div>
+
+                  <div class="weather-item">
+                    <span class="weather-label">Sensación térmica:</span>
+                    <span class="weather-value">{{ weather.current.apparent_temperature }}°C</span>
+                  </div>
+
+                  <div class="weather-item">
+                    <span class="weather-label">💨 Viento:</span>
+                    <span class="weather-value">{{ weather.current.wind_speed_10m }} km/h</span>
+                  </div>
+
+                  <div class="weather-item">
+                    <span class="weather-label">💧 Humedad:</span>
+                    <span class="weather-value">{{ weather.current.relative_humidity_2m }}%</span>
+                  </div>
+
+                  @if(weather.current.precipitation) {
+                    <div class="weather-item">
+                      <span class="weather-label">🌧️ Precipitación:</span>
+                      <span class="weather-value">{{ weather.current.precipitation }} mm</span>
+                    </div>
+                  }
+
+                  @if(weather.current.cloud_cover !== undefined) {
+                    <div class="weather-item">
+                      <span class="weather-label">☁️ Nubosidad:</span>
+                      <span class="weather-value">{{ weather.current.cloud_cover }}%</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            @if(weather.hourly && weather.hourly.temperature_2m) {
+              <div class="hourly-forecast">
+                <h4>📊 Próximas 12 horas</h4>
+                <div class="hourly-grid">
+                  @for(temp of weather.hourly.temperature_2m.slice(0, 12); track $index) {
+                    <div class="hour-item">
+                      <span class="hour-time">{{ $index + 1 }}h</span>
+                      <span class="hour-temp">{{ temp }}°C</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            @if(weather.daily && weather.daily.temperature_2m_max) {
+              <div class="daily-forecast">
+                <h4>📅 Próximos días</h4>
+                <div class="daily-grid">
+                  @for(maxTemp of weather.daily.temperature_2m_max.slice(0, 5); track $index) {
+                    <div class="day-item">
+                      <span class="day-label">Día {{ $index + 1 }}</span>
+                      <span class="day-temp">
+                        {{ weather.daily.temperature_2m_min[$index] }}° / {{ maxTemp }}°C
+                      </span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      } @else {
+        <div class="placeholder">
+          <p>💡 Ingresa el nombre de una ciudad y presiona "Get Weather" para ver el clima</p>
+        </div>
+      }
+    </div>
+  </section>
+</main>
+
+<!-- <router-outlet /> -->
