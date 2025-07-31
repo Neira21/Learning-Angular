@@ -9,8 +9,15 @@
         id="location"
         [(ngModel)]="location"
         name="location"
+        placeholder="Ej: Lima, Madrid, New York"
       />
-      <button type="button" (click)="getLocationWeather()">Get Weather</button>
+      <button
+        type="button"
+        (click)="loadWeatherData()"
+        [disabled]="isLoading()"
+      >
+        {{ isLoading() ? '🔄 Loading...' : 'Get Weather' }}
+      </button>
     </form>
 
     <!-- ✅ Contenedor para estados dinámicos -->
@@ -21,63 +28,56 @@
           <div class="loading-spinner">⏳</div>
         </div>
       }
-      @if(weatherData(); as weather) {
+      @if(weatherData$ | async; as weather) {
         <div id="weather">
           <h2>🌤️ Información del Clima</h2>
           <div class="weather-details">
             <div class="location-info">
-              <h3>📍 {{ location() }}</h3>
+              <h3>📍 {{ weather.location.name }}, {{ weather.location.country }}</h3>
               <p class="coordinates">
-                <strong>Coordenadas:</strong> {{ coordinates().lat.toFixed(2) }}°, {{ coordinates().lon.toFixed(2) }}°
+                <strong>Coordenadas:</strong> {{ weather.location.latitude.toFixed(2) }}°, {{ weather.location.longitude.toFixed(2) }}°
               </p>
+              <p><strong>👥 Población:</strong> {{ weather.location.population }}</p>
+              <p><strong>⏰ Zona horaria:</strong> {{ weather.location.timezone }}</p>
+              <p><strong>📏 Elevación:</strong> {{ weather.location.elevation }}m</p>
             </div>
 
-            @if(weather.current) {
+            @if(weather.weather.hourly && weather.weather.hourly.temperature_2m) {
               <div class="current-weather">
                 <h4>🌡️ Clima Actual</h4>
                 <div class="weather-grid">
                   <div class="weather-item">
                     <span class="weather-label">Temperatura:</span>
-                    <span class="weather-value temperature">{{ weather.current.temperature_2m }}°C</span>
+                    <span class="weather-value temperature">{{ weather.weather.hourly.temperature_2m[0] }}°C</span>
                   </div>
 
-                  <div class="weather-item">
-                    <span class="weather-label">Sensación térmica:</span>
-                    <span class="weather-value">{{ weather.current.apparent_temperature }}°C</span>
-                  </div>
-
-                  <div class="weather-item">
-                    <span class="weather-label">💨 Viento:</span>
-                    <span class="weather-value">{{ weather.current.wind_speed_10m }} km/h</span>
-                  </div>
-
-                  <div class="weather-item">
-                    <span class="weather-label">💧 Humedad:</span>
-                    <span class="weather-value">{{ weather.current.relative_humidity_2m }}%</span>
-                  </div>
-
-                  @if(weather.current.precipitation) {
+                  @if(weather.weather.hourly.apparent_temperature) {
                     <div class="weather-item">
-                      <span class="weather-label">🌧️ Precipitación:</span>
-                      <span class="weather-value">{{ weather.current.precipitation }} mm</span>
+                      <span class="weather-label">Sensación térmica:</span>
+                      <span class="weather-value">{{ weather.weather.hourly.apparent_temperature[0] }}°C</span>
                     </div>
                   }
 
-                  @if(weather.current.cloud_cover !== undefined) {
+                  @if(weather.weather.hourly.relative_humidity_2m) {
                     <div class="weather-item">
-                      <span class="weather-label">☁️ Nubosidad:</span>
-                      <span class="weather-value">{{ weather.current.cloud_cover }}%</span>
+                      <span class="weather-label">💧 Humedad:</span>
+                      <span class="weather-value">{{ weather.weather.hourly.relative_humidity_2m[0] }}%</span>
+                    </div>
+                  }
+
+                  @if(weather.weather.hourly.precipitation) {
+                    <div class="weather-item">
+                      <span class="weather-label">🌧️ Precipitación:</span>
+                      <span class="weather-value">{{ weather.weather.hourly.precipitation[0] }} mm</span>
                     </div>
                   }
                 </div>
               </div>
-            }
 
-            @if(weather.hourly && weather.hourly.temperature_2m) {
               <div class="hourly-forecast">
                 <h4>📊 Próximas 12 horas</h4>
                 <div class="hourly-grid">
-                  @for(temp of weather.hourly.temperature_2m.slice(0, 12); track $index) {
+                  @for(temp of weather.weather.hourly.temperature_2m.slice(0, 12); track $index) {
                     <div class="hour-item">
                       <span class="hour-time">{{ $index + 1 }}h</span>
                       <span class="hour-temp">{{ temp }}°C</span>
@@ -87,24 +87,9 @@
               </div>
             }
 
-            @if(weather.daily && weather.daily.temperature_2m_max) {
-              <div class="daily-forecast">
-                <h4>📅 Próximos días</h4>
-                <div class="daily-grid">
-                  @for(maxTemp of weather.daily.temperature_2m_max.slice(0, 5); track $index) {
-                    <div class="day-item">
-                      <span class="day-label">Día {{ $index + 1 }}</span>
-                      <span class="day-temp">
-                        {{ weather.daily.temperature_2m_min[$index] }}° / {{ maxTemp }}°C
-                      </span>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
           </div>
         </div>
-      } @else {
+      } @else if(!isLoading()) {
         <div class="placeholder">
           <p>💡 Ingresa el nombre de una ciudad y presiona "Get Weather" para ver el clima</p>
         </div>
