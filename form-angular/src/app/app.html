@@ -1,25 +1,29 @@
 
-
 <div class="form-container">
-  <form action="form">
+  <form [formGroup]="userForm" action="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Username:</label>
-      <input type="text" id="username">
+      <input type="text" id="username" formControlName="username">
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" id="email">
+      <input type="email" id="email" formControlName="email">
     </div>
 
     <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" id="password">
+      <input type="password" id="password" formControlName="password">
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword">
     </div>
 
     <div class="form-group">
       <label for="role">Role:</label>
-      <select id="role">
+      <select id="role" formControlName="role">
         <option value="" disabled selected hidden>Select Role</option>
         <option value="admin">Admin</option>
         <option value="editor">Editor</option>
@@ -28,17 +32,9 @@
         <option value="superuser">Superuser</option>
       </select>
     </div>
-
-    <div>
-      <button type="submit">Submit</button>
-    </div>
-
-
-
-
+    <button type="submit" [disabled]="!userForm.valid">Submit</button>
   </form>
 
 </div>
 
 
-<router-outlet />
