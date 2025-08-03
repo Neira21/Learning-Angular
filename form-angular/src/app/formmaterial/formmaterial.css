@@ -1,0 +1,156 @@
+/* Contenedor principal del formulario Material */
+.form-material {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Formulario */
+form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.3s ease;
+}
+
+
+
+/* Título del formulario */
+form::before {
+  content: "🎨 Material Design Form";
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 10px 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Fallback para navegadores que no soportan background-clip */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Grupos de campos Material */
+.form-group-material {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Material Form Fields */
+.form-group-material mat-form-field {
+  width: 100%;
+}
+
+/* Personalizar los mat-form-field */
+::ng-deep .mat-mdc-form-field {
+  width: 100% !important;
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-floating-label {
+  color: #667eea !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+  color: #667eea !important;
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-outline {
+  border-color: #e1e8ed !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-outline {
+  border-color: #667eea !important;
+  border-width: 2px !important;
+}
+
+::ng-deep .mat-mdc-form-field:hover .mat-mdc-outline {
+  border-color: #667eea !important;
+}
+
+/* Iconos */
+::ng-deep .mat-mdc-form-field .mat-icon {
+  color: #667eea !important;
+}
+
+/* Select options con iconos */
+::ng-deep .mat-mdc-option {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Errores de Material */
+::ng-deep .mat-mdc-form-field .mat-error {
+  color: #e74c3c !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  margin-top: 4px !important;
+}
+
+/* Botones de acción */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.form-actions button {
+  min-width: 140px;
+  height: 48px;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-material {
+    padding: 15px;
+  }
+
+  form {
+    padding: 30px 25px;
+    max-width: 100%;
+  }
+
+  form::before {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-actions button {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    padding: 25px 20px;
+  }
+
+  .form-group-material {
+    margin-bottom: 15px;
+  }
+}

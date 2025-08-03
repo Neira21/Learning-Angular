@@ -1,0 +1,131 @@
+<div class="form-material">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <!-- Username Field -->
+    <div class="form-group-material">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" />
+        <mat-icon matSuffix>person</mat-icon>
+        @if(userForm.get('username')?.invalid && userForm.get('username')?.touched) {
+          <mat-error>
+            @if(userForm.get('username')?.errors?.['required']) {
+              Username is required
+            }
+            @if(userForm.get('username')?.errors?.['minlength']) {
+              Username must be at least 3 characters
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group-material">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-icon matSuffix>email</mat-icon>
+        @if(userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+          <mat-error>
+            @if(userForm.get('email')?.errors?.['required']) {
+              Email is required
+            }
+            @if(userForm.get('email')?.errors?.['email']) {
+              Please enter a valid email address
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group-material">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-icon matSuffix>lock</mat-icon>
+        @if(userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+          <mat-error>
+            @if(userForm.get('password')?.errors?.['required']) {
+              Password is required
+            }
+            @if(userForm.get('password')?.errors?.['minlength']) {
+              Password must be at least 6 characters
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="form-group-material">
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" />
+        <mat-icon matSuffix>lock_outline</mat-icon>
+        @if(userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
+          <mat-error>
+            @if(userForm.get('confirmPassword')?.errors?.['required']) {
+              Confirm Password is required
+            }
+            @if(userForm.get('confirmPassword')?.errors?.['mismatch']) {
+              Passwords do not match
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Role Select Field -->
+    <div class="form-group-material">
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" >
+          <mat-option value="">
+            <em>None</em>
+          </mat-option>
+          <mat-option value="admin">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Admin
+          </mat-option>
+          <mat-option value="editor">
+            <mat-icon>edit</mat-icon>
+            Editor
+          </mat-option>
+          <mat-option value="user">
+            <mat-icon>person</mat-icon>
+            User
+          </mat-option>
+          <mat-option value="guest">
+            <mat-icon>visibility</mat-icon>
+            Guest
+          </mat-option>
+          <mat-option value="superuser">
+            <mat-icon>star</mat-icon>
+            Superuser
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>arrow_drop_down</mat-icon>
+        @if(userForm.get('role')?.invalid && userForm.get('role')?.touched) {
+          <mat-error>
+            Please select a role
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">
+        <mat-icon>send</mat-icon>
+        Submit Form
+      </button>
+
+      <button mat-button type="button" (click)="resetForm()">
+        <mat-icon>refresh</mat-icon>
+        Reset
+      </button>
+    </div>
+
+  </form>
+</div>

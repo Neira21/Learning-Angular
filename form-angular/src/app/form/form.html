@@ -1,0 +1,84 @@
+
+<div class="form-container">
+  <form [formGroup]="userForm" action="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+      />
+      @if(userForm.get('username')?.invalid &&
+      userForm.get('username')?.touched) {
+      <div class="error-message">
+        @if(userForm.get('username')?.errors?.['required']) {
+        <span>❌ Username is required</span>
+        } @if(userForm.get('username')?.errors?.['minlength']) {
+        <span>❌ Username must be at least 3 characters</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email" />
+      @if(userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+      <div class="error-message">
+        @if(userForm.get('email')?.errors?.['required']) {
+        <span>❌ Email is required</span>
+        } @if(userForm.get('email')?.errors?.['email']) {
+        <span>❌ Email must be a valid email address</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password" />
+      @if(userForm.get('password')?.invalid &&
+      userForm.get('password')?.touched) {
+      <div class="error-message">
+        @if(userForm.get('password')?.errors?.['required']) {
+        <span>❌ Password is required</span>
+        } @if(userForm.get('password')?.errors?.['minlength']) {
+        <span>❌ Password must be at least 6 characters</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+      />
+      @if(userForm.get('confirmPassword')?.invalid &&
+      userForm.get('confirmPassword')?.touched) {
+      <div class="error-message">
+        @if(userForm.get('confirmPassword')?.errors?.['required']) {
+        <span>❌ Confirm Password is required</span>
+        } @if(userForm.get('confirmPassword')?.errors?.['mismatch']) {
+        <span>❌ Passwords do not match</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <select id="role" formControlName="role">
+        <option value="" disabled selected hidden>Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="editor">Editor</option>
+        <option value="user">User</option>
+        <option value="guest" default-selected>Guest</option>
+        <option value="superuser">Superuser</option>
+      </select>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
