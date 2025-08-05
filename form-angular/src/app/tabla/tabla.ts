@@ -40,19 +40,45 @@ export class Tabla {
 
   private _createFormGroup(product: ICartProduct){
     return this.formBuilder.group({
-      name: [product.name],
-      price: [product.price],
-      quantity: [product.quantity],
-      total: [product.total]
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+      total: product.total
     });
   }
 
   private _calculate_row_total() {
-    this.productsFormArray.controls.forEach((group) => {
+    this.productsFormArray.controls.forEach((group, index) => {
       group.valueChanges.subscribe((value) => {
-        console.log('Row value changed:', value);
+        console.log("acaaaaaaaaaaaaa")
+
+        // ✅ Validar que tenemos valores válidos
+        const price = value.price || 0;
+        const quantity = value.quantity || 0;
+
+        // ✅ Calcular nuevo total automáticamente
+        const newTotal = price * quantity;
+
+        // ✅ Actualizar el control total sin disparar valueChanges
+        group.get('total')?.setValue(newTotal, { emitEvent: false });
+
+        // ✅ Sincronizar con dataSource para que la tabla muestre el cambio
+        this.dataSource[index].quantity = quantity;
+        this.dataSource[index].total = newTotal;
+
+        console.log(`💰 Total actualizado para ${value.name}: $${newTotal}`);
+
+        // ✅ Actualizar total general en el form
+        this.updateGrandTotalInForm();
       });
     });
+  }
+
+  // ✅ Método para actualizar el total general en el form
+  private updateGrandTotalInForm() {
+    const grandTotal = this.dataSource.reduce((sum, product) => sum + product.total, 0);
+    this.form.get('total')?.setValue(grandTotal, { emitEvent: false });
+    console.log(`📊 Total general actualizado: $${grandTotal}`);
   }
 
   get productsFormArray(){
@@ -61,7 +87,6 @@ export class Tabla {
 
   ngOnInit(): void {
     this._calculate_row_total();
-
   }
 
 
@@ -69,13 +94,23 @@ export class Tabla {
     console.log('Deleting product:', product);
     const index = this.dataSource.indexOf(product);
     if (index > -1) {
+      // ✅ Eliminar del dataSource
       this.dataSource.splice(index, 1);
       this.dataSource = [...this.dataSource];
+
+      // ✅ Eliminar del FormArray
+      this.productsFormArray.removeAt(index);
+
+      // ✅ Actualizar total general
+      this.updateGrandTotalInForm();
+
+      console.log(`🗑️ Producto eliminado: ${product.name}`);
     }
   }
 
   grandTotal() {
-    return this.dataSource.reduce((sum, product) => sum + product.total, 0);
+    // ✅ Obtener el total desde el form (más consistente)
+    return this.form.get('total')?.value || 0;
   }
 
   updateQuantityOnChange(product: ICartProduct): void {
