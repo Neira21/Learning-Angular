@@ -2,12 +2,15 @@
 
 
 <style>
+  .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+  }
   nav{
-    margin-bottom: 20px;
     display: flex;
     gap: 10px;
-    width: 100%;
-    justify-content: end;
     padding: 10px;
   }
   nav li {
@@ -18,19 +21,24 @@
     cursor: pointer;
     text-decoration: none;
     color: black;
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
   }
 
+
 </style>
 
-<h1>Formulario</h1>
+<div class="container">
 
-<nav>
-  <li><a routerLink="/">Formulario</a></li>
-  <li><a routerLink="/formMaterial">Formulario Material</a></li>
-</nav>
+  <h1>Formulario</h1>
 
+  <nav>
+    <li><a routerLink="/">Formulario</a></li>
+    <li><a routerLink="/formMaterial">Formulario Material</a></li>
+    <li><a routerLink="/table">Tabla</a></li>
+  </nav>
+
+</div>
 <router-outlet></router-outlet>
 

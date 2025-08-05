@@ -6,16 +6,9 @@
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" />
         <mat-icon matSuffix>person</mat-icon>
-        @if(userForm.get('username')?.invalid && userForm.get('username')?.touched) {
           <mat-error>
-            @if(userForm.get('username')?.errors?.['required']) {
-              Username is required
-            }
-            @if(userForm.get('username')?.errors?.['minlength']) {
-              Username must be at least 3 characters
-            }
+            ❌ Ingrese su nombre de usuario
           </mat-error>
-        }
       </mat-form-field>
     </div>
 
@@ -25,16 +18,16 @@
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" />
         <mat-icon matSuffix>email</mat-icon>
-        @if(userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+
           <mat-error>
             @if(userForm.get('email')?.errors?.['required']) {
-              Email is required
+              ❌ El email es requerido
             }
             @if(userForm.get('email')?.errors?.['email']) {
-              Please enter a valid email address
+              ❌ Por favor, ingrese un correo electrónico válido
             }
           </mat-error>
-        }
+
       </mat-form-field>
     </div>
 
@@ -47,10 +40,10 @@
         @if(userForm.get('password')?.invalid && userForm.get('password')?.touched) {
           <mat-error>
             @if(userForm.get('password')?.errors?.['required']) {
-              Password is required
+              ❌ La contraseña es requerida
             }
             @if(userForm.get('password')?.errors?.['minlength']) {
-              Password must be at least 6 characters
+              ❌ La contraseña debe tener al menos 6 caracteres
             }
           </mat-error>
         }
@@ -68,8 +61,8 @@
             @if(userForm.get('confirmPassword')?.errors?.['required']) {
               Confirm Password is required
             }
-            @if(userForm.get('confirmPassword')?.errors?.['mismatch']) {
-              Passwords do not match
+            @if(userForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
+              ❌ Las contraseñas no coinciden
             }
           </mat-error>
         }
@@ -108,7 +101,7 @@
         <mat-icon matSuffix>arrow_drop_down</mat-icon>
         @if(userForm.get('role')?.invalid && userForm.get('role')?.touched) {
           <mat-error>
-            Please select a role
+            ❌ Por favor seleccione un rol
           </mat-error>
         }
       </mat-form-field>
@@ -116,7 +109,7 @@
 
     <!-- Submit Button -->
     <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">
+      <button mat-raised-button color="primary" type="submit" >
         <mat-icon>send</mat-icon>
         Submit Form
       </button>

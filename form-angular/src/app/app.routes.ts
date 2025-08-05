@@ -8,5 +8,9 @@ export const routes: Routes = [
   {
     path: 'formMaterial',
     loadComponent: () => import('./formmaterial/formmaterial').then(m => m.Formmaterial)
+  },
+  {
+    path: 'table',
+    loadComponent: () => import('./tabla/tabla').then(m => m.Tabla)
   }
 ];
