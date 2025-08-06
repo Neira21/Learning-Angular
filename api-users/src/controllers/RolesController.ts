@@ -1,59 +1,61 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/UserService.js";
+import { RolService } from "../services/RolService.js";
 
-export class UserController {
-  static async getUsers(req: Request, res: Response) {
+export class RolesController {
+  static async getRoles(req: Request, res: Response) {
     try {
-      const users = await UserService.getAllUsers();
+      const roles = await RolService.getAllRoles();
       res.json({
         success: true,
-        data: users,
+        data: roles,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Error al obtener usuarios",
+        message: "Error al obtener roles",
         error: error instanceof Error ? error.message : "Error desconocido",
       });
     }
   }
 
-  static async getUserById(req: Request, res: Response) {
+  static async getRoleById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const user = await UserService.getUserById(id);
+      const role = await RolService.getRoleById(id);
 
-      if (!user) {
+      if (!role) {
         return res.status(404).json({
           success: false,
-          message: "Usuario no encontrado",
+          message: "Rol no encontrado",
         });
       }
 
       res.json({
         success: true,
-        data: user,
+        data: role,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Error al obtener usuario",
+        message: "Error al obtener rol",
       });
     }
   }
 
-  static async createUser(req: Request, res: Response) {
+  static async createRol(req: Request, res: Response) {
     try {
-      const userData = req.body;
-      const newUser = await UserService.createUser(userData);
+      console.log("Datos del rol:", req.body);
+      const rolData = req.body;
+      const newRol = await RolService.createRol(rolData);
       res.status(201).json({
         success: true,
-        data: newUser,
+        data: newRol,
       });
     } catch (error) {
+      console.log("error llego aca")
       res.status(400).json({
         success: false,
-        message: "Error al crear usuario",
+        message: "Error al crear rol",
         error: error instanceof Error ? error.message : "Error desconocido",
       });
     }
