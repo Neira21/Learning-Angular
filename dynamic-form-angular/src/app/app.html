@@ -1,0 +1,67 @@
+
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <!-- Cliente -->
+    <div>
+      <p>Carrito de compras para</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Cliente</mat-label>
+        <input matInput placeholder="Cliente" formControlName="client" />
+      </mat-form-field>
+    </div>
+
+
+    <!-- Productos -->
+
+    <div class="product-add">
+      <button mat-flat-button type="button" (click)="add()">Agregar</button>
+    </div>
+
+    <div class="product-container" formArrayName="products" >
+        @for ( product of productArray.controls; track product; let index = $index ) {
+          <!-- consolear product -->
+
+          <div class="product-row" [formGroupName]="index">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Producto</mat-label>
+              <mat-select formControlName="product" (selectionChange)="change($event, index)">
+                  @for(product of productos; track product.id) {
+                    <mat-option [value]="product">{{ product.name }}</mat-option>
+                  }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Precio Unitario</mat-label>
+              <input type="text" matInput [value]="productArray.controls[index].value.product?.priceUnitario" readonly />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Cantidad</mat-label>
+              <input matInput placeholder="Cantidad" (input)="changeQuantity(index, $event)" formControlName="quantity" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Subtotal</mat-label>
+              <input matInput placeholder="Subtotal" formControlName="subTotal" />
+            </mat-form-field>
+
+          <div>
+            <button mat-button color="secondary" type="button" (click)="delete(index)">Delete</button>
+          </div>
+        </div>
+        }
+    </div>
+
+    <div class="form-result">
+    <div class="product-save">
+      <button mat-flat-button>Save</button>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Total</mat-label>
+        <input matInput type="text" placeholder="Total" formControlName="Total" readonly>
+      </mat-form-field>
+    </div>
+    </div>
+  </form>
+</div>
