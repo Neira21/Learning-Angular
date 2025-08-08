@@ -7,6 +7,14 @@
       <mat-form-field appearance="outline">
         <mat-label>Cliente</mat-label>
         <input matInput placeholder="Cliente" formControlName="client" />
+        <mat-error>
+          @if(form.get('client')?.hasError('required') ) {
+            ❌ El nombre del cliente es requerido
+          }
+          @if(form.get('client')?.hasError('minlength')) {
+            ❌ El nombre del cliente debe tener al menos 3 caracteres
+          }
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -30,6 +38,11 @@
                     <mat-option [value]="product">{{ product.name }}</mat-option>
                   }
               </mat-select>
+              <mat-error>
+                @if(productArray.controls[index].get('product')?.hasError('required')) {
+                  ❌ Debe seleccionar un producto
+                }
+              </mat-error>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Precio Unitario</mat-label>
@@ -37,7 +50,18 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Cantidad</mat-label>
-              <input matInput placeholder="Cantidad" (input)="changeQuantity(index, $event)" formControlName="quantity" />
+              <input matInput type="number" min="1" max="999" placeholder="Cantidad" (input)="changeQuantity(index, $event)" formControlName="quantity" />
+              <mat-error>
+                @if(productArray.controls[index].get('quantity')?.hasError('required')) {
+                  ❌ La cantidad es requerida
+                }
+                @if(productArray.controls[index].get('quantity')?.hasError('min')) {
+                  ❌ Mínimo valor 1
+                }
+                @if(productArray.controls[index].get('quantity')?.hasError('max')) {
+                  ❌ Máximo valor 999
+                }
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Subtotal</mat-label>

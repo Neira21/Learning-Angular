@@ -8,12 +8,12 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-
 
 // Interface para producto
 interface Product {
@@ -49,7 +49,6 @@ type Form = FormGroup<{
   styleUrl: './app.css',
 })
 export class App {
-
   private subscription = new Subscription();
 
   // Array de productos para el formulario
@@ -73,17 +72,16 @@ export class App {
   formBuilder = inject(NonNullableFormBuilder);
 
   form: Form = this.formBuilder.group({
-    client: [''],
+    client: ['', [Validators.required, Validators.minLength(3)]],
     products: this.formBuilder.array<ProductForm>([this.createProductForm()]),
     Total: [0],
   });
-
 
   constructor() {
     this.subscription.add(
       this.productArray.valueChanges.subscribe(() => {
         console.log('Productos cambiados');
-        console.log(this.productArray.controls[0].value.product?.priceUnitario);
+        console.log(this.productArray.controls[0]?.value.product?.priceUnitario);
         this.updateTotal();
       })
     );
@@ -102,20 +100,32 @@ export class App {
     this.form.get('Total')?.setValue(total);
   }
 
-
-
-
   createProductForm(): ProductForm {
     return this.formBuilder.group({
-      product: this.formBuilder.control<Product | null>(null),
-      subTotal: this.formBuilder.control<number>(0),
-      quantity: this.formBuilder.control<number>(0),
+      product: this.formBuilder.control<Product | null>(null, [Validators.required]),
+      subTotal: this.formBuilder.control<number>(0, [Validators.min(0)]),
+      quantity: this.formBuilder.control<number>(0, [Validators.required, Validators.min(1), Validators.max(999)]),
     });
   }
 
   save() {
     console.log('save');
-    console.log(this.form.value);
+    console.log(this.form);
+    if (this.form.invalid) {
+      console.warn('⚠️ Formulario inválido');
+      this.markFormGroupTouched();
+      return;
+    }
+
+    console.log('✅ Guardando carrito:', this.form.value);
+    console.log(`📊 Total: $${this.Total}`);
+  }
+
+  markFormGroupTouched() {
+    this.form.markAllAsTouched();
+    this.productArray.controls.forEach((control) => {
+      control.markAllAsTouched();
+    });
   }
 
   change(e: MatSelectChange, index: number) {
@@ -123,9 +133,7 @@ export class App {
       subTotal: e.value?.priceUnitario || 0, // Actualizar precio basado en el producto seleccionado
       quantity: 1, // Reiniciar cantidad al seleccionar un nuevo producto
     });
-
   }
-
 
   changeQuantity(index: number, e: Event) {
     if (!this.productArray.at(index)) return;
@@ -137,7 +145,7 @@ export class App {
 
     productForm.patchValue({
       quantity,
-      subTotal: price * quantity
+      subTotal: price * quantity,
     });
   }
 
@@ -149,5 +157,6 @@ export class App {
   delete(index: number) {
     console.log('delete', index);
     this.productArray.removeAt(index);
+    this.updateTotal();
   }
 }

@@ -17,9 +17,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-bottom: 16px;
 }
 
+.product-container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
 .product-row{
+
   display: flex;
   gap: 16px;
+
 }
 
 .form-result{
