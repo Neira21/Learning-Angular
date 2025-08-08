@@ -1,0 +1,22 @@
+<h1 style="text-align: center">Lista de pokemon</h1>
+
+<div class="container">
+  @if(pokemonList.isLoading()) {
+  <p>🔄 Cargando Pokemon...</p>
+  } @if(pokemonList.error()) {
+  <p>❌ Error: {{ pokemonList.error() }}</p>
+  } @if(pokemonList.value(); as pokemons) { @for(pokemon of pokemons.results;
+  track pokemon.name) {
+  <poke-pokemon-item [pokemonItem]="pokemon" />
+  } }
+</div>
+
+<style>
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+</style>

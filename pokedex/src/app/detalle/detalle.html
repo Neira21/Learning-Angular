@@ -1,0 +1,25 @@
+<p>detalle works!</p>
+
+@if (pokemonDetalle.isLoading()){
+  <p>Loading...</p>
+}
+@if (pokemonDetalle.error()){
+  <p>Error: {{pokemonDetalle.error()}}</p>
+}
+@if (pokemonDetalle.value(); as pokemon){
+  <div class="pokemon-details">
+    <img
+      width="200"
+      height="200"
+      [src] ="pokemon.sprites.front_default"
+      [alt]="name()"
+    />
+    <h1>{{ name() | titlecase }}</h1>
+    @for(type of pokemon.types; track type) {
+      <span class="type-badge">{{ type.type.name | titlecase }}</span>
+    }
+
+    <a [routerLink]="['/pokemon']"> 🔙 Back to Pokemon List</a>
+
+  </div>
+}

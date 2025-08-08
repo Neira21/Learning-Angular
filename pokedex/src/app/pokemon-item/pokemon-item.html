@@ -1,0 +1,32 @@
+
+<style>
+  .pokemon-card{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    width: 150px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .pokemon-card img{
+    cursor: pointer;
+  }
+  .pokemon-card:hover {
+    transform: translateY(-2px);
+  }
+</style>
+
+<div class="pokemon-card">
+  <h3>{{ pokemonItem().name | titlecase }}</h3>
+  <!-- <img [src]="pokemon.image" alt="{{ pokemon.name }}" width="150" height="150" /> -->
+  <img
+    width="120"
+    height="120"
+    [src]="pokemonItem().url | pokeImgPipe"
+    alt="{{ pokemonItem().name }}"
+    routerLink="/pokemon/{{ pokemonItem().name }}"
+  />
+
+  <!-- crear pipe para  obtener el id de pokemon y usarlo aca-->
+</div>
