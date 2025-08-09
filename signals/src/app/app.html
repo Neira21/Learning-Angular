@@ -1,0 +1,98 @@
+<h3>Lista de Productoss</h3>
+
+<div>
+  <p>
+    Si tu compra es mayor a 50 000$ o usas points obtienes un regalo sorpresa
+  </p>
+
+  @if(enablePromo){
+  <p>🎁 ¡Felicidades! Tienes un regalo sorpresa</p>
+  }@else{
+  <p>❌ No tienes derecho a regalo sorpresa</p>
+  }
+</div>
+
+
+<div class="main-container">
+
+
+
+<div class="signals__control">
+  <div class="signals__select">
+    <label for="products">Selecciona un Producto</label>
+    <select
+      name="product"
+      id="products"
+      size="4"
+      (change)="selectProduct($event)"
+    >
+      @for(product of products(); track product.id){
+      <option [value]="product.id">{{ product.nombre }}</option>
+      }
+    </select>
+  </div>
+
+  <fieldset>
+    <legend>Usar puntos</legend>
+    <div>
+      <input
+        [checked]="true"
+        type="radio"
+        name="puntos"
+        id="no"
+        [value]="false"
+        (change)="handleRadio($event)"
+      />
+      <label for="no">No</label>
+    </div>
+    <div>
+      <input
+        type="radio"
+        name="puntos"
+        id="si"
+        (change)="handleRadio($event)"
+        [value]="true"
+      />
+      <label for="si">Si</label>
+    </div>
+  </fieldset>
+</div>
+
+
+@if(productoSeleccionado()){
+  <div class="signals__card">
+    <div class="card__sections">
+      <h4>Producto Seleccionado</h4>
+      <strong>Nombre: {{ productoSeleccionado()!.nombre }}</strong>
+    </div>
+    <div class="card__sections">
+      <p>Precio/unid</p>
+      <p>Precio: {{ productoSeleccionado()!.price }}</p>
+    </div>
+    <div class="card__sections">
+      <p>Cantidad</p>
+
+      <div class="sections-quantity-control">
+        <button class="secondary-button" (click)="handleQuantity(-1)"> &#8722; </button>
+        {{ productoSeleccionado()!.quantity }}
+        <button class="secondary-button" (click)="handleQuantity(+1)">&#43;</button>
+
+      </div>
+    </div>
+
+    <div class="card__sections">
+      <p>Precio Total</p>
+      <p>{{totalPrice()}} $</p>
+      <button class="primary-button" (click)="addToCart()">
+        Agregar al carrito
+      </button>
+
+    </div>
+
+
+  </div>
+
+}
+
+</div>
+
