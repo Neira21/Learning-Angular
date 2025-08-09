@@ -18,6 +18,25 @@
     @for(type of pokemon.types; track type) {
       <span class="type-badge">{{ type.type.name | titlecase }}</span>
     }
+    <br/>
+
+    <p>Moves</p>
+    @for(move of pokemon.moves; track move; let index = $index){
+      <span class="move-badge">{{ move.move.name|titlecase}}@if(index < pokemon.moves.length - 1) {, }
+      </span>
+    }
+
+    <br>
+    <br>
+    @for(move of pokemon.moves; track move; let index = $index){
+      <span class="move-badge">{{ move.move.name | titlecase | showarray:pokemon.moves:index}}</span>
+    }
+
+
+    <!-- <p><strong>Moves:</strong> {{ pokemon.moves | showarray }}</p> -->
+
+
+    <br>
 
     <a [routerLink]="['/pokemon']"> 🔙 Back to Pokemon List</a>
 

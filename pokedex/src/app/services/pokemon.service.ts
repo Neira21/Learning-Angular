@@ -6,9 +6,11 @@ import { PokeList, PokeListResult, Pokemon } from '../models/poke-list-model';
   providedIn: 'root'
 })
 export class PokemonService {
+
   readonly pokemonURL = 'https://pokeapi.co/api/v2';
   getPokemonList(): HttpResourceRef<PokeList | undefined> {
-    return httpResource<PokeList>(()=>`${this.pokemonURL}/pokemon?limit=151` )
+    const https = httpResource<PokeList>(()=>`${this.pokemonURL}/pokemon?limit=151` )
+    return https;
   }
 
   getPokemonDetail(name: Signal<string>): HttpResourceRef< Pokemon | undefined> {
