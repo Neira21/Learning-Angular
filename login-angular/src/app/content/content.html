@@ -1,1 +1,74 @@
-<p>content works!</p>
+<div class="content-container">
+  <div class="content-card">
+    <!-- Header con bienvenida -->
+    <div class="welcome-header">
+      <h1>🎉 ¡Bienvenido!</h1>
+      @if (currentUser()) {
+        <h2>Hola, {{ currentUser()?.name }}! 👋</h2>
+      }
+      <p>Has iniciado sesión exitosamente en la plataforma</p>
+    </div>
+
+    <!-- Información del usuario -->
+    @if (currentUser()) {
+      <div class="user-info">
+        <h3>📋 Información de tu cuenta</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">👤 Nombre:</span>
+            <span class="value">{{ currentUser()?.name }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">📧 Email:</span>
+            <span class="value">{{ currentUser()?.email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">🆔 ID Usuario:</span>
+            <span class="value">#{{ currentUser()?.id }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">🔐 Estado:</span>
+            <span class="value status-active">✅ Autenticado</span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Acciones disponibles -->
+    <div class="actions-section">
+      <h3>🚀 ¿Qué puedes hacer?</h3>
+      <div class="action-cards">
+        <div class="action-card">
+          <div class="action-icon">📊</div>
+          <h4>Dashboard</h4>
+          <p>Ver tus estadísticas y métricas</p>
+          <button class="action-btn">Ir al Dashboard</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">⚙️</div>
+          <h4>Configuración</h4>
+          <p>Personaliza tu perfil y preferencias</p>
+          <button class="action-btn">Configurar</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">📚</div>
+          <h4>Documentación</h4>
+          <p>Lee la guía y documentación</p>
+          <button class="action-btn">Ver Docs</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de logout -->
+    <div class="logout-section">
+      <button
+        class="logout-btn"
+        (click)="logout()"
+      >
+        🚪 Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</div>
