@@ -1,0 +1,17 @@
+<router-outlet />
+
+{{title()}}
+
+<h1>Control value accessor</h1>
+
+<hr>
+<br><br>
+<h3>Star Rating</h3>
+
+<hr>
+
+<div>
+  <app-star-rating [disabled] = "false" [(rating)]="rating" [starCount]="5" />
+  <p> Rating Value: <strong>{{rating()}}</strong> </p>
+
+</div>

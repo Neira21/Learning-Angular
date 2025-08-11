@@ -1,0 +1,19 @@
+@for(star of stars(); track i; let i = $index) {
+  <span
+    class="star"
+    [class.hovered]="hoveredIndex() !== -1 && i <= hoveredIndex() && !isDisabled()"
+    [class.filled]="hoveredIndex() === -1 && i < rating()"
+    (click)="rate(i + 1)"
+    (mouseover)="handleMouseOver(i)"
+  >
+    &#9733;
+  </span>
+}
+
+<!-- Que es filled -->
+<!--
+  filled: si el indice del star es menor al rating, se pinta de color amarillo
+  hovered: si el indice del star es menor al hoveredIndex, se pinta de color amarillo claro
+ -->
+
+

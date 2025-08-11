@@ -1,0 +1,62 @@
+/* Contenedor del componente star-rating */
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 24px;
+  user-select: none;
+}
+
+/* Estilo individual de cada estrella */
+.star {
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.2s ease, transform 0.1s ease;
+  display: inline-block;
+  font-size: inherit;
+}
+
+/* Estrella llena (rating actual) */
+.star.filled {
+  color: #ffd700;
+}
+
+/* Estrella con hover (previsualización) */
+.star.hovered {
+  color: #ffed4e;
+  transform: scale(1.1);
+}
+
+/* Hover effect para todas las estrellas */
+.star:hover {
+  transform: scale(1.1);
+}
+
+/* Estado deshabilitado */
+.star-rating.disabled .star {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.star-rating.disabled .star:hover {
+  transform: none;
+}
+
+/* Animación sutil al hacer click */
+.star:active {
+  transform: scale(0.95);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .star-rating {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-rating {
+    font-size: 18px;
+    gap: 1px;
+  }
+}
