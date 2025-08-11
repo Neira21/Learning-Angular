@@ -1,6 +1,6 @@
 
 <div class="form-container">
-  <form [formGroup]="userForm" action="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Username:</label>
       <input
@@ -8,12 +8,14 @@
         id="username"
         formControlName="username"
       />
+
       @if(userForm.get('username')?.invalid &&
-      userForm.get('username')?.touched) {
+      userForm.get('username')?.touched && isSubmitted) {
       <div class="error-message">
-        @if(userForm.get('username')?.errors?.['required']) {
+        @if(userForm.get('username')?.hasError('required')){
         <span>❌ Username is required</span>
-        } @if(userForm.get('username')?.errors?.['minlength']) {
+        }
+        @if(userForm.get('username')?.hasError('minlength')) {
         <span>❌ Username must be at least 3 characters</span>
         }
       </div>
@@ -23,12 +25,14 @@
     <div class="form-group">
       <label for="email">Email:</label>
       <input type="email" id="email" formControlName="email" />
-      @if(userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+      @if(userForm.get('email')?.invalid &&
+      userForm.get('email')?.touched && isSubmitted) {
       <div class="error-message">
-        @if(userForm.get('email')?.errors?.['required']) {
+        @if(userForm.get('email')?.hasError('required')) {
         <span>❌ Email is required</span>
-        } @if(userForm.get('email')?.errors?.['email']) {
-        <span>❌ Email must be a valid email address</span>
+        }
+        @if(userForm.get('email')?.hasError('email')) {
+        <span>❌ Please enter a valid email address</span>
         }
       </div>
       }
@@ -38,11 +42,12 @@
       <label for="password">Password:</label>
       <input type="password" id="password" formControlName="password" />
       @if(userForm.get('password')?.invalid &&
-      userForm.get('password')?.touched) {
+      userForm.get('password')?.touched && isSubmitted) {
       <div class="error-message">
-        @if(userForm.get('password')?.errors?.['required']) {
+        @if(userForm.get('password')?.hasError('required')) {
         <span>❌ Password is required</span>
-        } @if(userForm.get('password')?.errors?.['minlength']) {
+        }
+        @if(userForm.get('password')?.hasError('minlength')) {
         <span>❌ Password must be at least 6 characters</span>
         }
       </div>
@@ -57,11 +62,12 @@
         formControlName="confirmPassword"
       />
       @if(userForm.get('confirmPassword')?.invalid &&
-      userForm.get('confirmPassword')?.touched) {
+      userForm.get('confirmPassword')?.touched && isSubmitted) {
       <div class="error-message">
-        @if(userForm.get('confirmPassword')?.errors?.['required']) {
+        @if(userForm.get('confirmPassword')?.hasError('required')) {
         <span>❌ Confirm Password is required</span>
-        } @if(userForm.get('confirmPassword')?.errors?.['mismatch']) {
+        }
+        @if(userForm.get('confirmPassword')?.hasError('passwordMismatch')) {
         <span>❌ Passwords do not match</span>
         }
       </div>
@@ -75,9 +81,17 @@
         <option value="admin">Admin</option>
         <option value="editor">Editor</option>
         <option value="user">User</option>
-        <option value="guest" default-selected>Guest</option>
+        <option value="guest">Guest</option>
         <option value="superuser">Superuser</option>
       </select>
+      @if(userForm.get('role')?.invalid &&
+      userForm.get('role')?.touched && isSubmitted) {
+      <div class="error-message">
+        @if(userForm.get('role')?.hasError('required')) {
+        <span>❌ Role is required</span>
+        }
+      </div>
+      }
     </div>
     <button type="submit">Submit</button>
   </form>
