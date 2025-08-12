@@ -1,0 +1,58 @@
+<h1>Example {{ title() }}</h1>
+<form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Name</mat-label>
+    <input type="text" matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email" />
+  </mat-form-field>
+
+  <fieldset class="example-full-width" formGroupName="address">
+    <legend>Address</legend>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="city" type="text" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Pais</mat-label>
+      <input matInput formControlName="country" type="text" />
+    </mat-form-field>
+  </fieldset>
+
+  <fieldset formArrayName="claims" class="example-full-width">
+    <div style="display: flex; justify-content: end;">
+      <button class="addClaim" (click)="addClaim()">Add Claim</button>
+    </div>
+    <legend>Claims</legend>
+    @for(claim of form.controls.claims.controls; track claim; let index=$index){
+    <div [formGroupName]="index" class="claim-row">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Product {{ index + 1 }}</mat-label>
+        <input matInput formControlName="product" type="text" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Claim {{ index + 1 }}</mat-label>
+        <input matInput formControlName="claim" type="text" />
+      </mat-form-field>
+      <button mat-icon-button type="button" (click)="removeClaim(index)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    }
+  </fieldset>
+
+  <button class="button" type="submit">Send Form</button>
+</form>
+
+<div class="form-debug">
+  {{ this.form.value | json }}
+</div>
+
+<!-- comando para angular material
+ng add @angular/material
+ -->
