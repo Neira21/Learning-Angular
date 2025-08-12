@@ -1,61 +1,25 @@
-# Ejemplo de observables con RJSX anidados
+# Pokedex
 
-```typescript
-getPokemonOther(): void {
-    this.http.get<any>('https://pokeapi.co/api/v2/pokemon?limit=20')
-      .pipe(
-        map(res => res.results),
-        switchMap((pokemons: any[]) =>
-          from(pokemons).pipe(
-            concatMap((pokemon) => this.http.get(pokemon.url)),
-            toArray() // 👈 importante: junta todos en un solo array, en orden
-          )
-        )
-      )
-      .subscribe((pokemonDetails) => {
-        console.log('Detalles de los Pokémon en una lista:', pokemonDetails);
-      });
-  }
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
 
+## Development server
 
-// añadiendo algun atributo extra a los pokemons
+To start a local development server, run:
 
-getPokemonWithFavorite(): void {
-    this.http.get<any>('https://pokeapi.co/api/v2/pokemon?limit=3').pipe(
-      map((response) =>
-        response.results.map((pokemon: any) => ({
-          ...pokemon,
-          favorite: Math.random() > 0.5,
-        }))
-      ),
-      switchMap((pokemonsWithFavorite: any[]) =>
-        from(pokemonsWithFavorite).pipe(
-          concatMap((pokemon) =>
-            this.http.get(pokemon.url).pipe(
-              map((detail) => ({
-                ...detail,
-                favorite: pokemon.favorite,
-              }))
-            )
-          ),
-          toArray() // junta todos los resultados en un array cuando terminen
-        )
-      )
-    )
-    .subscribe(pokemonDetails => {
-      console.log('Pokémons con detalle + favorito:', pokemonDetails);
-    });
-  }
-
-
+```bash
+ng serve
 ```
 
-  
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+
+# Example observables with RJSX nested (anidados)
+
 
 ```typescript
 
-  //Clima varios lugares
-  // En el servicio
+//Clima varios lugares
+// En el servicio
 import { Injectable, inject } from '@angular/core';
   
   private http = inject(HttpClient);
@@ -103,5 +67,67 @@ import { Injectable, inject } from '@angular/core';
       console.log('Todas las ubicaciones con su clima:', locationsWithWeather);
     });
 }
+
+```
+
+
+
+
+
+
+```typescript
+// Example pokemon
+// Return a array of Pokémon with their details using RxJS operators
+// map: recorre los datos del observable y devuelve un nuevo observable
+// switchMap: cambia el observable a otro observable usando el resultado del observable anterior
+// concatMap: aplana los observables anidados en un solo observable
+
+getPokemonOther(): void {
+    this.http.get<any>('https://pokeapi.co/api/v2/pokemon?limit=20')
+      .pipe(
+        map(res => res.results),
+        switchMap((pokemons: any[]) =>
+          from(pokemons).pipe(
+            concatMap((pokemon) => this.http.get(pokemon.url)),
+            toArray() // 👈 importante: junta todos en un solo array, en orden
+          )
+        )
+      )
+      .subscribe((pokemonDetails) => {
+        console.log('Detalles de los Pokémon en una lista:', pokemonDetails);
+      });
+  }
+
+
+// añadiendo algun atributo extra a los pokemons
+
+getPokemonWithFavorite(): void {
+    this.http.get<any>('https://pokeapi.co/api/v2/pokemon?limit=3')
+    .pipe(
+      map((response) =>
+        response.results.map((pokemon: any) => ({
+          ...pokemon,
+          favorite: Math.random() > 0.5,
+        }))
+      ),
+      switchMap((pokemonsWithFavorite: any[]) =>
+        from(pokemonsWithFavorite).pipe(
+          concatMap((pokemon) =>
+            this.http.get(pokemon.url).pipe(
+              map((detail) => ({
+                ...detail,
+                favorite: pokemon.favorite,
+              }))
+            )
+          ),
+          toArray() // junta todos los resultados en un array cuando terminen
+        )
+      )
+    )
+    .subscribe(pokemonDetails => {
+      console.log('Pokémons con detalle + favorito:', pokemonDetails);
+    });
+  }
+
 
 ```
