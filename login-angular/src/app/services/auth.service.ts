@@ -3,11 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, catchError, map, finalize } from 'rxjs/operators';
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
+// Respuesta del servidor al loguearse
 export interface LoginResponse {
   success: boolean;
   token?: string;
@@ -19,6 +15,13 @@ export interface LoginResponse {
   message: string;
 }
 
+// Modelo de dato que se envia para login
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+// Modelo del usuario
 export interface User {
   id: number;
   email: string;
@@ -29,6 +32,8 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
+
+
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'auth_user';
 
@@ -40,10 +45,15 @@ export class AuthService {
   // URL de la API (configúrala según tu backend)
   private readonly API_URL = 'http://localhost:3000/api'; // Cambia por tu API
 
-  // Signals para el estado de autenticación (inicialización lazy)
+  // Signals para el estado de autenticación (inicialización automática)
   isAuthenticated = signal<boolean>(false);
-  currentUser = signal<User | null>(null);
   isLoading = signal<boolean>(false);
+  currentUser = signal<User | null>(null);
+
+  constructor() {
+    // Verificar automáticamente el estado de autenticación al inicializar el servicio
+    this.checkAuthStatus();
+  }
 
   // Usuarios mock para simular base de datos
   private mockUsers = [
@@ -52,12 +62,6 @@ export class AuthService {
     { id: 3, email: 'demo@test.com', password: 'demo123', name: 'Usuario Demo' }
   ];
 
-  constructor() {
-    // Inicializar de forma asíncrona para evitar dependencias circulares
-    setTimeout(() => {
-      this.checkAuthStatus();
-    }, 0);
-  }
 
   /**
    * Iniciar sesión
@@ -136,7 +140,7 @@ export class AuthService {
   }
 
   /**
-   * Obtener usuario almacenado
+   * Obtener usuario almacenado en el localStorage
    */
   private getStoredUser(): User | null {
     const userData = localStorage.getItem(this.USER_KEY);
@@ -155,14 +159,33 @@ export class AuthService {
    */
   private checkAuthStatus(): void {
     const isValid = this.hasValidToken();
+    const storedUser = this.getStoredUser();
+
+    console.log('🔍 Verificando estado de autenticación:', {
+      hasToken: !!this.getToken(),
+      hasUser: !!storedUser,
+      isValid
+    });
+
     this.isAuthenticated.set(isValid);
-    this.currentUser.set(this.getStoredUser());
+    this.currentUser.set(storedUser);
 
     if (!isValid) {
       // Solo limpiar localStorage sin llamar logout
       localStorage.removeItem(this.TOKEN_KEY);
       localStorage.removeItem(this.USER_KEY);
+      console.log('🧹 Token inválido, limpiando localStorage');
+    } else {
+      console.log('✅ Usuario autenticado:', storedUser?.name);
     }
+  }
+
+  /**
+   * Método público para verificar estado de autenticación
+   */
+  checkAuthenticationStatus(): boolean {
+    this.checkAuthStatus();
+    return this.isAuthenticated();
   }
 
   /**

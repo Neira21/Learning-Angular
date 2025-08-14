@@ -1,30 +1,42 @@
+export interface RegisterRequest {
+  usuario: string;
+  password: string;
+  // No incluir rol_id, se asigna automáticamente
+}
+
 export interface LoginRequest {
-  email: string;
+  usuario: string;
   password: string;
 }
 
 export interface LoginResponse {
   success: boolean;
-  token?: string;
-  user?: {
+  token: string;
+  user: {
     id: number;
-    email: string;
-    name: string;
-    role: string;
+    usuario: string;
+    role: string; // Nombre del rol, no el ID
   };
   message: string;
 }
 
 export interface JwtPayload {
   userId: number;
-  email: string;
+  usuario: string;
   role: string;
   iat?: number;
   exp?: number;
 }
 
-export interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
+// Para extender Request de Express
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        userId: number;
+        usuario: string;
+        role: string;
+      };
+    }
+  }
 }
