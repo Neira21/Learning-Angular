@@ -16,7 +16,7 @@ export class UserService {
 
   static async getUserByUsername(usuario: string): Promise<User | null> {
     if (!usuario) {
-      throw new Error('Username es requerido');
+      throw new Error('Usuario es requerido');
     }
     return await UserModel.findByUsername(usuario);
   }

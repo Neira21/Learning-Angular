@@ -24,7 +24,6 @@ export class UserModel {
        WHERE u.id = ?`,
       [id]
     );
-    console.log("Usuario obtenido:", rows);
     return rows.length > 0 ? (rows[0] as User) : null;
   }
 
@@ -39,7 +38,6 @@ export class UserModel {
        WHERE u.usuario = ?`,
       [usuario]
     );
-    console.log("Usuario obtenido por username:", rows);
     return rows.length > 0 ? (rows[0] as User) : null;
   }
 

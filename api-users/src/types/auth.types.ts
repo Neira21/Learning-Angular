@@ -1,7 +1,6 @@
 export interface RegisterRequest {
   usuario: string;
   password: string;
-  // No incluir rol_id, se asigna automáticamente
 }
 
 export interface LoginRequest {
@@ -12,12 +11,28 @@ export interface LoginRequest {
 export interface LoginResponse {
   success: boolean;
   token: string;
+  refreshToken?: string; // Agregar refresh token
   user: {
     id: number;
     usuario: string;
     role: string; // Nombre del rol, no el ID
   };
   message: string;
+}
+
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+export interface RefreshTokenResponse {
+  success: boolean;
+  token: string;
+  user: {
+    id: number;
+    usuario: string;
+    role: string;
+  };
+  message?: string;
 }
 
 export interface JwtPayload {

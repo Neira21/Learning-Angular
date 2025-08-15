@@ -1,113 +1,125 @@
-import { Request, Response } from 'express';
-import { AuthService } from '../services/AuthService.js';
-import { UserService } from '../services/UserService.js';
-import { LoginRequest, RegisterRequest, LoginResponse } from '../types/auth.types.js';
-import { CreateUserData } from '../types/user.js';
-import { RegisterUserSchema } from '../schemas/validation.schemas.js';
+import { Request, Response } from "express";
+import { AuthService } from "../services/AuthService.js";
+import { UserService } from "../services/UserService.js";
+import { LoginResponse } from "../types/auth.types.js";
+import { CreateUserData, LoginRequest } from "../types/user.js";
+import { RegisterUserSchema } from "../schemas/validation.schemas.js";
 
 export class AuthController {
   /**
    * Registro de usuario
    */
   static async register(req: Request, res: Response): Promise<void> {
-  try {
-    const { usuario, password }: RegisterRequest = req.body;
+    try {
+      if (!req.body.usuario || !req.body.password) {
+        res.status(400).json({
+          success: false,
+          message: "Usuario y contraseña son requeridos",
+        });
+        return;
+      }
 
-    // Validación de datos
-    const validation = RegisterUserSchema.safeParse({
-      usuario,
-      password,
-    });
+      const { usuario, password }: CreateUserData = req.body;
 
-    if (!validation.success) {
-      res.status(400).json({
-        success: false,
-        message: 'Datos inválidos',
-        errors: validation.error.issues
+      // Validación de datos
+      const validation = RegisterUserSchema.safeParse({
+        usuario,
+        password,
       });
-      return;
-    }
 
-    // Verificar si el usuario ya existe
-    const existingUser = await UserService.getUserByUsername(usuario);
-    if (existingUser) {
-      res.status(409).json({
+      if (!validation.success) {
+        res.status(400).json({
+          success: false,
+          message: "Datos inválidos",
+          errors: validation.error.issues,
+        });
+        return;
+      }
+
+      // Verificar si el usuario ya existe
+      const existingUser = await UserService.getUserByUsername(usuario);
+      if (existingUser) {
+        res.status(409).json({
+          success: false,
+          message: "El usuario ya está registrado",
+        });
+        return;
+      }
+
+      // Encriptar contraseña
+      const hashedPassword = await AuthService.hashPassword(password);
+
+      // ✅ Crear usuario con la estructura correcta - tipado específico
+      const newUserData: CreateUserData = {
+        usuario: usuario,
+        password: hashedPassword,
+        rol_id: 2, // Rol 'user' por defecto
+      };
+
+      // createUser devuelve User (con rol expandido)
+      const createdUser = await UserService.createUser(newUserData);
+
+      // Generar token
+      const token = AuthService.generateToken(createdUser);
+
+      const response: LoginResponse = {
+        success: true,
+        token: token.accessToken,
+        user: {
+          id: createdUser.id,
+          usuario: createdUser.usuario,
+          role: createdUser.role, // ✅ Ahora devuelve el NOMBRE del rol
+        },
+        message: "Usuario registrado exitosamente",
+      };
+
+      res.status(201).json(response);
+    } catch (error) {
+      console.error("Error en registro:", error);
+      res.status(500).json({
         success: false,
-        message: 'El usuario ya está registrado'
+        message: "Error interno del servidor", // ✅ Corregir typo
+        error: error instanceof Error ? error.message : "Error desconocido",
       });
-      return;
     }
-
-    // Encriptar contraseña
-    const hashedPassword = await AuthService.hashPassword(password);
-
-    // ✅ Crear usuario con la estructura correcta - tipado específico
-    const newUserData: CreateUserData = {
-      usuario: usuario,
-      password: hashedPassword,
-      rol_id: 2 // Rol 'user' por defecto
-    };
-
-    // createUser devuelve User (con rol expandido)
-    const createdUser = await UserService.createUser(newUserData);
-
-    // Generar token
-    const token = AuthService.generateToken(createdUser);
-
-    const response: LoginResponse = {
-      success: true,
-      token,
-      user: {
-        id: createdUser.id,
-        usuario: createdUser.usuario,
-        role: createdUser.role // ✅ Ahora devuelve el NOMBRE del rol
-      },
-      message: 'Usuario registrado exitosamente'
-    };
-
-    res.status(201).json(response);
-  } catch (error) {
-    console.error('Error en registro:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error interno del servidor', // ✅ Corregir typo
-      error: error instanceof Error ? error.message : 'Error desconocido'
-    });
   }
-}
 
   /**
    * Login de usuario
    */
   static async login(req: Request, res: Response): Promise<void> {
     try {
-      const { usuario, password }: LoginRequest = req.body;
-
       // Validación básica
-      if (!usuario || !password) {
+      if (!req.body.usuario || !req.body.password) {
         res.status(400).json({
           success: false,
-          message: 'Usuario y contraseña son requeridos'
+          message: "Usuario y contraseña son requeridos",
         });
         return;
       }
+
+      const { usuario, password }: LoginRequest = req.body;
 
       // Buscar usuario por username
       const user = await UserService.getUserByUsername(usuario);
       if (!user) {
         res.status(401).json({
           success: false,
-          message: 'Credenciales inválidas'
+          message: "Credenciales inválidas",
         });
         return;
       }
 
       // Verificar contraseña
-      const isPasswordValid = await AuthService.comparePassword(password, user.password);
+      const isPasswordValid = await AuthService.comparePassword(
+        password,
+        user.password
+      );
+
       if (!isPasswordValid) {
         res.status(401).json({
           success: false,
-          message: 'Credenciales inválidas'
+          message: "Credenciales inválidas",
         });
         return;
       }
@@ -117,22 +129,22 @@ export class AuthController {
 
       const response: LoginResponse = {
         success: true,
-        token,
+        token: token.accessToken,
         user: {
           id: user.id,
           usuario: user.usuario,
-          role: user.role
+          role: user.role,
         },
-        message: 'Login exitoso'
+        message: "Login exitoso",
       };
 
       res.status(200).json(response);
     } catch (error) {
-      console.error('Error en login:', error);
+      console.error("Error en login:", error);
       res.status(500).json({
         success: false,
-        message: 'Error interno del servidor',
-        error: error instanceof Error ? error.message : 'Error desconocido'
+        message: "Error interno del servidor",
+        error: error instanceof Error ? error.message : "Error desconocido",
       });
     }
   }
@@ -145,7 +157,7 @@ export class AuthController {
       if (!req.user) {
         res.status(401).json({
           success: false,
-          message: 'Token inválido'
+          message: "Token inválido",
         });
         return;
       }
@@ -155,7 +167,7 @@ export class AuthController {
       if (!user) {
         res.status(404).json({
           success: false,
-          message: 'Usuario no encontrado'
+          message: "Usuario no encontrado",
         });
         return;
       }
@@ -165,16 +177,16 @@ export class AuthController {
         user: {
           id: user.id,
           usuario: user.usuario,
-          role: user.role
+          role: user.role,
         },
-        message: 'Token válido'
+        message: "Token válido",
       });
     } catch (error) {
-      console.error('Error en verificación de token:', error);
+      console.error("Error en verificación de token:", error);
       res.status(500).json({
         success: false,
-        message: 'Error interno del servidor',
-        error: error instanceof Error ? error.message : 'Error desconocido'
+        message: "Error interno del servidor",
+        error: error instanceof Error ? error.message : "Error desconocido",
       });
     }
   }
@@ -187,7 +199,7 @@ export class AuthController {
       if (!req.user) {
         res.status(401).json({
           success: false,
-          message: 'Usuario no autenticado'
+          message: "Usuario no autenticado",
         });
         return;
       }
@@ -196,7 +208,7 @@ export class AuthController {
       if (!user) {
         res.status(404).json({
           success: false,
-          message: 'Usuario no encontrado'
+          message: "Usuario no encontrado",
         });
         return;
       }
@@ -207,14 +219,14 @@ export class AuthController {
           id: user.id,
           usuario: user.usuario,
           role: user.role,
-        }
+        },
       });
     } catch (error) {
-      console.error('Error al obtener perfil:', error);
+      console.error("Error al obtener perfil:", error);
       res.status(500).json({
         success: false,
-        message: 'Error interno del servidor',
-        error: error instanceof Error ? error.message : 'Error desconocido'
+        message: "Error interno del servidor",
+        error: error instanceof Error ? error.message : "Error desconocido",
       });
     }
   }

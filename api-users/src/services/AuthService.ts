@@ -5,22 +5,35 @@ import { JwtPayload } from '../types/auth.types.js';
 
 export class AuthService {
   private static readonly JWT_SECRET: string = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+  private static readonly REFRESH_SECRET: string = process.env.REFRESH_SECRET || 'your-refresh-secret';
+
   private static readonly JWT_EXPIRES_IN = '1h';
   private static readonly SALT_ROUNDS = 12;
+  private static readonly REFRESH_TOKEN_EXPIRES = '7d';
+
 
   /**
    * Genera un token JWT para el usuario
    */
-  static generateToken(user: User): string {
+  static generateToken(user: User): {accessToken: string, refreshToken: string} {
     const payload = {
       userId: user.id,
       usuario: user.usuario,
       role: user.role
     };
 
-    return jwt.sign(payload, this.JWT_SECRET, {
+    const accessToken = jwt.sign(payload, this.JWT_SECRET, {
       expiresIn: this.JWT_EXPIRES_IN
     });
+
+    const refreshToken = jwt.sign(payload, this.REFRESH_SECRET, {
+      expiresIn: this.REFRESH_TOKEN_EXPIRES
+    });
+
+    return {
+      accessToken,
+      refreshToken
+    }
   }
 
   /**
@@ -33,6 +46,8 @@ export class AuthService {
       throw new Error('Token inválido');
     }
   }
+
+
 
   /**
    * Encripta una contraseña
