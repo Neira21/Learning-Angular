@@ -28,7 +28,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
     }
 
     const decoded = AuthService.verifyToken(token);
+    
+    // Acá está el payload decodificado osea la información del usuario segun el token
     req.user = decoded;
+
+    console.log('Token verificado con éxito:', req.user);
     
     next();
   } catch (error) {

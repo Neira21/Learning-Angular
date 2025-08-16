@@ -72,19 +72,20 @@ export class UserModel {
       fields.push('password = ?');
       values.push(userData.password);
     }
-    if (userData.role !== undefined) {
-      fields.push('role = ?');
-      values.push(userData.role);
+     if (userData.rol_id !== undefined) {
+      fields.push('rol_id = ?');
+      values.push(userData.rol_id);
     }
 
     if (fields.length === 0) {
       throw new Error("No hay campos para actualizar");
     }
 
-    fields.push('updated_at = CURRENT_TIMESTAMP');
-    values.push(id);
 
     const query = `UPDATE users SET ${fields.join(', ')} WHERE id = ?`;
+    values.push(id);
+
+    console.log("Executing query:", query);
     
     await pool.query<ResultSetHeader>(query, values);
     return this.findById(id);

@@ -6,7 +6,6 @@ export class UserController {
   static async getUsers(req: Request, res: Response) {
     try {
       const users = await UserService.getAllUsers();
-      console.log("Usuarios obtenidos usercontrolle:", users);
       
       // Filtrar información sensible (no devolver passwords)
       const safeUsers: UserResponse[] = users.map(user => ({
@@ -70,71 +69,70 @@ export class UserController {
   }
 
   static async createUser(req: Request, res: Response) {
-    console.log("Creando usuario con datos:", req.body);
-    // try {
-    //   const userData = req.body;
-    //   const newUser = await UserService.createUser(userData);
+    try {
+      const userData = req.body;
+      const newUser = await UserService.createUser(userData);
       
-    //   // Filtrar información sensible
-    //   const safeUser: UserResponse = {
-    //     id: newUser.id,
-    //     usuario: newUser.usuario,
-    //     role: newUser.role
-    //   };
+      // Filtrar información sensible
+      const safeUser: UserResponse = {
+        id: newUser.id,
+        usuario: newUser.usuario,
+        role: newUser.role
+      };
 
-    //   res.status(201).json({
-    //     success: true,
-    //     data: safeUser,
-    //   });
-    // } catch (error) {
-    //   res.status(400).json({
-    //     success: false,
-    //     message: "Error al crear usuario",
-    //     error: error instanceof Error ? error.message : "Error desconocido",
-    //   });
-    // }
+      res.status(201).json({
+        success: true,
+        data: safeUser,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: "Error al crear usuario",
+        error: error instanceof Error ? error.message : "Error desconocido",
+      });
+    }
   }
 
   static async updateUser(req: Request, res: Response) {
-  //   try {
-  //     const id = parseInt(req.params.id);
-  //     const userData = req.body;
+    try {
+      const id = parseInt(req.params.id);
+      const userData = req.body;
 
-  //     if (isNaN(id)) {
-  //       return res.status(400).json({
-  //         success: false,
-  //         message: "ID inválido",
-  //       });
-  //     }
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "ID inválido",
+        });
+      }
 
-  //     const updatedUser = await UserService.updateUser(id, userData);
+      const updatedUser = await UserService.updateUser(id, userData);
 
-  //     if (!updatedUser) {
-  //       return res.status(404).json({
-  //         success: false,
-  //         message: "Usuario no encontrado",
-  //       });
-  //     }
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "Usuario no encontrado",
+        });
+      }
 
-  //     // Filtrar información sensible
-  //     const safeUser: UserResponse = {
-  //       id: updatedUser.id,
-  //       usuario: updatedUser.usuario,
-  //       role: updatedUser.role
-  //     };
+      // Filtrar información sensible
+      const safeUser: UserResponse = {
+        id: updatedUser.id,
+        usuario: updatedUser.usuario,
+        role: updatedUser.role
+      };
 
-  //     res.json({
-  //       success: true,
-  //       data: safeUser,
-  //       message: "Usuario actualizado exitosamente"
-  //     });
-  //   } catch (error) {
-  //     res.status(400).json({
-  //       success: false,
-  //       message: "Error al actualizar usuario",
-  //       error: error instanceof Error ? error.message : "Error desconocido",
-  //     });
-  //   }
+      res.json({
+        success: true,
+        data: safeUser,
+        message: "Usuario actualizado exitosamente"
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: "Error al actualizar usuario",
+        error: error instanceof Error ? error.message : "Error desconocido",
+      });
+    }
   }
 
   static async deleteUser(req: Request, res: Response) {

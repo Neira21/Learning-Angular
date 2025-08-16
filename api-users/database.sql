@@ -1,6 +1,6 @@
 -- Crear base de datos
-CREATE DATABASE IF NOT EXISTS usersdb;
-USE usersdb;
+CREATE DATABASE IF NOT EXISTS usersdbprueba;
+USE usersdbprueba;
 
 -- Crear tabla roles
 CREATE TABLE IF NOT EXISTS roles (

@@ -64,7 +64,7 @@ export class AuthController {
 
       const response: LoginResponse = {
         success: true,
-        token: token.accessToken,
+        token: token,
         user: {
           id: createdUser.id,
           usuario: createdUser.usuario,
@@ -129,7 +129,7 @@ export class AuthController {
 
       const response: LoginResponse = {
         success: true,
-        token: token.accessToken,
+        token: token,
         user: {
           id: user.id,
           usuario: user.usuario,
