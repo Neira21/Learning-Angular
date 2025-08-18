@@ -20,7 +20,7 @@ export class Content {
   constructor() {
     // Verificar si el usuario está autenticado
     if (!this.isAuthenticated()) {
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
     }
   }
 

@@ -1,5 +1,16 @@
 <div class="login-container">
   <!-- Overlay de loading global -->
+
+
+  @if(Error()){
+    <div class="error-overlay">
+      <div class="error-content">
+        <p>❌ Error: {{ Error() }}</p>
+      </div>
+    </div>
+  }
+
+
   @if (isLoading()) {
     <div class="loading-overlay">
       <div class="loading-content">
@@ -28,20 +39,22 @@
     <!-- Formulario -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
 
-      <!-- Campo Email -->
+      <!-- Campo Username -->
       <div class="form-group">
-        <label for="email">📧 Email</label>
+        <label for="username">� Username</label>
         <input
-          type="email"
-          id="email"
-          formControlName="email"
-          placeholder="tu@email.com"
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="username"
           class="form-control"
-          [class.error]="email?.invalid && email?.touched"
+          [class.error]="username?.invalid && username?.touched"
+
         />
-        @if (getFieldError('email')) {
-          <div class="field-error">{{ getFieldError('email') }}</div>
+        @if (getFieldError('username')) {
+          <div class="field-error">{{ getFieldError('username') }}</div>
         }
+
       </div>
 
       <!-- Campo Contraseña -->
@@ -69,19 +82,6 @@
         }
       </div>
 
-      <!-- Recordarme -->
-      <div class="form-group checkbox-group">
-        <label class="checkbox-label">
-          <input
-            type="checkbox"
-            formControlName="rememberMe"
-            class="checkbox"
-          />
-          <span class="checkmark"></span>
-          Recordarme
-        </label>
-      </div>
-
       <!-- Botón de login -->
       <button
         type="submit"
@@ -100,22 +100,6 @@
       </button>
     </form>
 
-    <!-- Credenciales de prueba -->
-    <div class="test-credentials">
-      <h4>🧪 Credenciales de Prueba</h4>
-      <div class="test-buttons">
-        @for (user of getAvailableUsers(); track user.email) {
-          <button
-            type="button"
-            class="test-button"
-            (click)="fillTestCredentials(user.email.includes('admin') ? 'admin' : user.email.includes('demo') ? 'demo' : 'user')"
-          >
-            {{ user.name }}<br>
-            <small>{{ user.email }}</small>
-          </button>
-        }
-      </div>
-    </div>
 
     <!-- Enlaces adicionales -->
     <div class="login-footer">

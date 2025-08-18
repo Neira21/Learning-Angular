@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, LoginRequest } from '../services/auth.service';
@@ -21,18 +21,18 @@ export class Login {
 
   // FormGroup dinámico
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    rememberMe: [false]
   });
 
   // Getters para acceso fácil a los controles
-  get email() { return this.loginForm.get('email'); }
+  get username() { return this.loginForm.get('username'); }
   get password() { return this.loginForm.get('password'); }
-  get rememberMe() { return this.loginForm.get('rememberMe'); }
 
   // Getter para estado de loading del servicio
   get isLoading() { return this.authService.isLoading; }
+
+  get Error() { return this.authService.isError; }
 
   constructor() {
     // Limpiar mensaje de error cuando el usuario escriba
@@ -41,29 +41,38 @@ export class Login {
         this.errorMessage.set('');
       }
     });
+
+    effect(() => {
+      console.log(this.Error())
+    });
   }
 
   /**
    * Procesar login
    */
   onSubmit(): void {
+
+    console.log('Form value:', this.loginForm.value);
+
     if (this.loginForm.valid) {
       const credentials: LoginRequest = {
-        email: this.email?.value,
+        usuario: this.username?.value,  // ← Cambiar a 'usuario'
         password: this.password?.value
       };
 
+      console.log('Login credentials:', credentials);
+
       // Deshabilitar el formulario durante el login
+      // el desabilitar es para evitar múltiples envíos
       this.loginForm.disable();
 
       this.authService.login(credentials).subscribe({
         next: (response) => {
           this.errorMessage.set('');
-
           // Pequeño delay para mejor UX antes de redirigir
           setTimeout(() => {
             this.router.navigate(['/content']);
-          }, 500);
+          }, 1000);
         },
         error: (error) => {
           this.errorMessage.set(error.message || 'Error al iniciar sesión');
@@ -76,7 +85,9 @@ export class Login {
       this.markFormGroupTouched();
       this.errorMessage.set('Por favor, completa todos los campos correctamente');
     }
-  }  /**
+  }
+
+  /**
    * Alternar visibilidad de contraseña
    */
   togglePasswordVisibility(): void {
@@ -92,6 +103,8 @@ export class Login {
       control?.markAsTouched();
     });
   }
+
+
 
   /**
    * Obtener mensaje de error para un campo específico
@@ -118,31 +131,12 @@ export class Login {
    */
   private getFieldLabel(fieldName: string): string {
     const labels: { [key: string]: string } = {
-      email: 'Email',
+      username: 'Usuario',
       password: 'Contraseña'
     };
     return labels[fieldName] || fieldName;
   }
 
-  /**
-   * Llenar con credenciales de prueba
-   */
-  fillTestCredentials(userType: 'admin' | 'user' | 'demo'): void {
-    const testCredentials = {
-      admin: { email: 'admin@test.com', password: '123456' },
-      user: { email: 'user@test.com', password: 'password' },
-      demo: { email: 'demo@test.com', password: 'demo123' }
-    };
 
-    const credentials = testCredentials[userType];
-    this.loginForm.patchValue(credentials);
-    this.errorMessage.set('');
-  }
 
-  /**
-   * Obtener usuarios disponibles para testing
-   */
-  getAvailableUsers() {
-    return this.authService.getAvailableUsers();
-  }
 }

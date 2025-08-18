@@ -11,45 +11,48 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   // Verificar si el usuario está autenticado
-  const isAuthenticated = authService.checkAuthenticationStatus();
+  //const isAuthenticated = authService.checkAuthenticationStatus();
 
-  console.log('🛡️ Auth Guard - Estado:', {
-    isAuthenticated,
-    currentRoute: state.url,
-    token: !!authService.getToken()
-  });
+  // console.log('🛡️ Auth Guard - Estado:', {
+  //   isAuthenticated,
+  //   currentRoute: state.url,
+  //   token: !!authService.getToken()
+  // });
 
-  if (isAuthenticated) {
-    return true;
-  } else {
-    // Redirigir al login si no está autenticado
-    console.log('🚫 Acceso denegado, redirigiendo al login');
-    router.navigate(['/']);
-    return false;
-  }
+  // if (isAuthenticated) {
+  //   return true;
+  // } else {
+  //   // Redirigir al login si no está autenticado
+  //   console.log('🚫 Acceso denegado, redirigiendo al login');
+  //   router.navigate(['/']);
+  //   return false;
+  // }
+  return false
 };
 
 /**
- * Guard que evita acceso al login si ya está autenticado
+ * Guard que evita acceso al login si el token es válido
+ * y redirige al content si ya está autenticado
  */
 export const loginGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
   // Verificar si el usuario está autenticado
-  const isAuthenticated = authService.checkAuthenticationStatus();
+  //const isAuthenticated = authService.checkAuthenticationStatus();
 
-  console.log('🚪 Login Guard - Estado:', {
-    isAuthenticated,
-    currentRoute: state.url
-  });
+  // console.log('🚪 Login Guard - Estado:', {
+  //   isAuthenticated,
+  //   currentRoute: state.url
+  // });
 
-  if (isAuthenticated) {
-    // Si ya está autenticado, redirigir al content
-    console.log('✅ Ya autenticado, redirigiendo al content');
-    router.navigate(['/content']);
-    return false;
-  } else {
-    return true;
-  }
+  // if (isAuthenticated) {
+  //   // Si ya está autenticado, redirigir al content
+  //   console.log('✅ Ya autenticado, redirigiendo al content');
+  //   router.navigate(['/content']);
+  //   return false;
+  // } else {
+  //   return true;
+  // }
+  return true;
 };

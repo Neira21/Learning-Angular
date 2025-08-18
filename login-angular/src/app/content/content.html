@@ -1,11 +1,16 @@
+
 <div class="content-container">
   <div class="content-card">
     <!-- Header con bienvenida -->
     <div class="welcome-header">
       <h1>🎉 ¡Bienvenido!</h1>
       @if (currentUser()) {
-        <h2>Hola, {{ currentUser()?.name }}! 👋</h2>
+        <h2>Hola, {{ currentUser()?.usuario }}! 👋</h2>
       }
+
+      {{currentUser()?.usuario}}
+      {{isAuthenticated()}}
+
       <p>Has iniciado sesión exitosamente en la plataforma</p>
     </div>
 
@@ -16,16 +21,20 @@
         <div class="info-grid">
           <div class="info-item">
             <span class="label">👤 Nombre:</span>
-            <span class="value">{{ currentUser()?.name }}</span>
-          </div>
-          <div class="info-item">
-            <span class="label">📧 Email:</span>
-            <span class="value">{{ currentUser()?.email }}</span>
+            <span class="value">{{ currentUser()?.usuario }}</span>
           </div>
           <div class="info-item">
             <span class="label">🆔 ID Usuario:</span>
             <span class="value">#{{ currentUser()?.id }}</span>
           </div>
+
+          <div class="info-item">
+            <span class="label">🆔 Rol Usuario:</span>
+            <span class="value">#{{ currentUser()?.role }}</span>
+          </div>
+
+
+
           <div class="info-item">
             <span class="label">🔐 Estado:</span>
             <span class="value status-active">✅ Autenticado</span>
