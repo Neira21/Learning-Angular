@@ -1,16 +1,18 @@
+import { passwordMatchValidator } from './../../../../form-angular/src/app/customValidator/password-match.validator';
 import { Component, effect, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
 import { AuthService, LoginRequest } from '../services/auth.service';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrl: './login.css'
+  selector: 'app-register',
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: './register.html',
+  styleUrl: './register.css'
 })
-export class Login {
+export class Register {
+
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -18,16 +20,46 @@ export class Login {
   // Signals para el estado del componente
   errorMessage = signal<string>('');
   showPassword = signal<boolean>(false);
+  showPasswordConfirm = signal<boolean>(false);
 
   // FormGroup dinámico
   loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-  });
+    confirmPassword: ['', [Validators.required]],
+  },
+{
+  validators: this.passwordMatchValidator
+});
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    if (!password || !confirmPassword) {
+      return null;
+    }
+
+    if (password.value !== confirmPassword.value) {
+      // Agregar error al campo confirmPassword
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      // Limpiar error si las contraseñas coinciden
+      const errors = confirmPassword.errors;
+      if (errors) {
+        delete errors['passwordMismatch'];
+        confirmPassword.setErrors(Object.keys(errors).length === 0 ? null : errors);
+      }
+      return null;
+    }
+  }
 
   // Getters para acceso fácil a los controles
   get username() { return this.loginForm.get('username'); }
   get password() { return this.loginForm.get('password'); }
+
+  get confirmPassword() { return this.loginForm.get('confirmPassword'); }
 
   // Getter para estado de loading del servicio
   get isLoading() { return this.authService.isLoading; }
@@ -53,21 +85,27 @@ export class Login {
    */
   onSubmit(): void {
 
+    console.log('Form value:', this.loginForm.value);
+
     if (this.loginForm.valid) {
       const credentials: LoginRequest = {
         usuario: this.username?.value,  // ← Cambiar a 'usuario'
         password: this.password?.value
       };
 
+      console.log('Login credentials:', credentials);
+
       // Deshabilitar el formulario durante el login
       // el desabilitar es para evitar múltiples envíos
       this.loginForm.disable();
 
-      this.authService.login(credentials).subscribe({
+      this.authService.register(credentials).subscribe({
         next: (response) => {
           this.errorMessage.set('');
           // Pequeño delay para mejor UX antes de redirigir
-          this.router.navigate(['/content']);
+          setTimeout(() => {
+            this.router.navigate(['/content']);
+          }, 1000);
         },
         error: (error) => {
           this.errorMessage.set(error.message || 'Error al iniciar sesión');
@@ -87,6 +125,10 @@ export class Login {
    */
   togglePasswordVisibility(): void {
     this.showPassword.update(show => !show);
+  }
+
+  togglePasswordConfirmVisibility(): void {
+    this.showPasswordConfirm.update(show => !show);
   }
 
   /**
@@ -111,8 +153,8 @@ export class Login {
       if (field.errors['required']) {
         return `${this.getFieldLabel(fieldName)} es requerido`;
       }
-      if (field.errors['email']) {
-        return 'Ingresa un email válido';
+      if (field.errors['passwordMismatch']){
+        return 'Las contraseñas no coinciden';
       }
       if (field.errors['minlength']) {
         return `${this.getFieldLabel(fieldName)} debe tener al menos ${field.errors['minlength'].requiredLength} caracteres`;
@@ -127,11 +169,10 @@ export class Login {
   private getFieldLabel(fieldName: string): string {
     const labels: { [key: string]: string } = {
       username: 'Usuario',
-      password: 'Contraseña'
+      password: 'Contraseña',
+      confirmPassword: 'Confirmar Contraseña'
     };
     return labels[fieldName] || fieldName;
   }
-
-
 
 }

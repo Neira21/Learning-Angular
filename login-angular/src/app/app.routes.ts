@@ -8,6 +8,11 @@ export const routes: Routes = [
     //canActivate: [loginGuard] // Evita acceso al login si ya está autenticado
   },
   {
+    path: 'register',
+    loadComponent: () => import('./register/register').then(m => m.Register),
+    //canActivate: [loginGuard] // Evita acceso al login si ya está autenticado
+  },
+  {
     path: 'content',
     loadComponent: () => import('./content/content').then(m => m.Content),
     //canActivate: [authGuard] // Protege la ruta del content

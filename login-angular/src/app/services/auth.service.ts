@@ -54,38 +54,48 @@ export class AuthService {
   /**
    * Iniciar sesión
    */
+  /**
+   * Procesa la respuesta de login/register y actualiza signals/localStorage
+   */
+  private handleAuthResponse(response: LoginResponse): LoginResponse {
+    if (response.success && response.token && response.user) {
+      localStorage.setItem(this.TOKEN_KEY, response.token);
+      localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
+      this.isAuthenticated.set(true);
+      this.currentUser.set(response.user);
+      this.isError.set(false);
+    } else {
+      this.isAuthenticated.set(false);
+      this.currentUser.set(null);
+      this.isError.set(true);
+    }
+    this.isLoading.set(false);
+    return response;
+  }
+
+  /**
+   * Maneja errores de login/register
+   */
+  private handleAuthError(error: any): Observable<ErrorResponse> {
+    this.isLoading.set(false);
+    this.isError.set(true);
+    console.error('❌ Error en autenticación:', error);
+    return throwError(() => ({
+      success: false,
+      message: error?.error?.message || 'Error de conexión con el servidor',
+    }));
+  }
+
+  /**
+   * Iniciar sesión
+   */
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    console.log('🔑 Intentando iniciar sesión');
     this.isLoading.set(true);
-    //  Usar API real
-    // return this.loginWithAPI(credentials);
     return this.http
       .post<LoginResponse>(`${this.API_URL}/auth/login`, credentials)
       .pipe(
-        map((response) => {
-          if (response.success && response.token && response.user) {
-            // Guardar token y usuario
-            localStorage.setItem(this.TOKEN_KEY, response.token);
-            localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
-
-            // Actualizar signals
-            this.isAuthenticated.set(true);
-            this.currentUser.set(response.user);
-            this.isLoading.set(false);
-          }
-          return response;
-        }),
-        catchError((error) => {
-          console.log(error)
-          this.isLoading.set(false);
-          this.isError.set(true);
-          console.error('❌ Error en login API:', error);
-          return throwError(() : ErrorResponse => ({
-            success: false,
-            message:
-              error?.error?.message || 'Error de conexión con el servidor',
-          }));
-        })
+        map((response) => this.handleAuthResponse(response)),
+        catchError((error) => this.handleAuthError(error))
       );
   }
 
@@ -158,6 +168,10 @@ export class AuthService {
     }
   }
 
+  constructor() {
+    this.checkAuthStatus(); // ← Esto inicializa el estado al cargar la app
+  }
+
   /**
    * Método público para verificar estado de autenticación
    */
@@ -169,47 +183,23 @@ export class AuthService {
   /**
    * Registro de usuario (para API real)
    */
-  register(userData: {
-    email: string;
-    password: string;
-    name: string;
-  }): Observable<LoginResponse> {
+  /**
+   * Registro de usuario (misma respuesta que login)
+   */
+  register(userData: LoginRequest): Observable<LoginResponse> {
     this.isLoading.set(true);
-
     return this.http
       .post<LoginResponse>(`${this.API_URL}/auth/register`, userData)
       .pipe(
-        catchError((error) => {
-          this.isLoading.set(false);
-          return throwError(() => ({
-            success: false,
-            message: error?.error?.message || 'Error al registrar usuario',
-          }));
-        })
+        map((response) => this.handleAuthResponse(response)),
+        catchError((error) => this.handleAuthError(error))
       );
   }
 
   /**
    * Verificar token con API (para refresh automático)
    */
-  verifyToken(): Observable<{ valid: boolean; user?: User }> {
-    const token = this.getToken();
-    if (!token) {
-      return of({ valid: false });
-    }
 
-    return this.http
-      .get<{ valid: boolean; user?: User }>(`${this.API_URL}/auth/verify`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(
-        catchError(() => {
-          // Si el token no es válido, limpiar todo
-          this.logout();
-          return of({ valid: false });
-        })
-      );
-  }
 
   /**
    * Cambiar contraseña (para API real)

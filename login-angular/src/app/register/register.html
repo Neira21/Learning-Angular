@@ -25,8 +25,8 @@
        [class.blur]="isLoading()">
     <!-- Header -->
     <div class="login-header">
-      <h2>🔐 Iniciar Sesión</h2>
-      <p>Ingresa tus credenciales para acceder</p>
+      <h2>🧑🏻 Registrar Nuevo Usuario</h2>
+      <p>Ingresa tus credenciales para registrarte</p>
     </div>
 
     <!-- Mensaje de error global -->
@@ -82,6 +82,31 @@
         }
       </div>
 
+      <!-- Campo Confirmar Contraseña -->
+      <div class="form-group">
+        <label for="password">🔒 Repite tu contraseña</label>
+        <div class="password-container">
+          <input
+            [type]="showPasswordConfirm() ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            placeholder="Confirmar contraseña"
+            class="form-control"
+            [class.error]="confirmPassword?.invalid && confirmPassword?.touched"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordConfirmVisibility()"
+          >
+            {{ showPasswordConfirm() ? '🙈' : '👁️' }}
+          </button>
+        </div>
+        @if (getFieldError('confirmPassword')) {
+          <div class="field-error">{{ getFieldError('confirmPassword') }}</div>
+        }
+      </div>
+
       <!-- Botón de login -->
       <button
         type="submit"
@@ -105,7 +130,7 @@
     <div class="login-footer">
       <a href="#" class="link">¿Olvidaste tu contraseña?</a>
       <span class="separator">|</span>
-      <a routerLink="/register" class="link">Crear cuenta</a>
+      <a href="#" class="link">Crear cuenta</a>
     </div>
   </div>
 </div>
