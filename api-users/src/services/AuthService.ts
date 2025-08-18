@@ -5,7 +5,7 @@ import { JwtPayload } from '../types/auth.types.js';
 
 export class AuthService {
   private static readonly JWT_SECRET: string = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-  private static readonly JWT_EXPIRES_IN = '30m'; // 30 minutos
+  private static readonly JWT_EXPIRES_IN = '2h'; // 2 horas
   private static readonly SALT_ROUNDS = 12;
 
   /**

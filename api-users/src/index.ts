@@ -11,7 +11,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:4200", // Angular app
+  ],
+  credentials: true, // Permitir credenciales si es necesario
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos permitidos
+  allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+}));
+
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {

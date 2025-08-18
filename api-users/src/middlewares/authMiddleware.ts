@@ -45,7 +45,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
 };
 
 /**
- * Middleware para verificar roles específicos
+ * Middleware para verificar roles específicos, los roles validos se pasan como un array
+ * @param allowedRoles - Array de roles permitidos
+ * @returns {Function} - Middleware que verifica el rol del usuario
+ * @throws {Error} - Si el usuario no está autenticado o no tiene el rol
  */
 export const roleMiddleware = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {

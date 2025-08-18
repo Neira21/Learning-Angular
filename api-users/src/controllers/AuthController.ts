@@ -138,6 +138,7 @@ export class AuthController {
         message: "Login exitoso",
       };
 
+      console.log("Login exitoso:", response);
       res.status(200).json(response);
     } catch (error) {
       console.error("Error en login:", error);
