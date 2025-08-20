@@ -1,9 +1,9 @@
-import { passwordMatchValidator } from './../../../../form-angular/src/app/customValidator/password-match.validator';
 import { Component, effect, inject, signal } from '@angular/core';
 import { AuthService, LoginRequest } from '../services/auth.service';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Role, RoleService } from '../services/role.service';
 
 @Component({
   selector: 'app-register',
@@ -17,16 +17,20 @@ export class Register {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  private roleService = inject(RoleService);
+
   // Signals para el estado del componente
   errorMessage = signal<string>('');
   showPassword = signal<boolean>(false);
   showPasswordConfirm = signal<boolean>(false);
+  roles = signal<Role[]>([]);
 
   // FormGroup dinámico
   loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]],
+    rol_id: [2, [Validators.required]] // Rol 'user' por defecto
   },
 {
   validators: this.passwordMatchValidator
@@ -58,13 +62,12 @@ export class Register {
   // Getters para acceso fácil a los controles
   get username() { return this.loginForm.get('username'); }
   get password() { return this.loginForm.get('password'); }
-
   get confirmPassword() { return this.loginForm.get('confirmPassword'); }
+  get rol_id() { return this.loginForm.get('rol_id'); }
 
-  // Getter para estado de loading del servicio
-  get isLoading() { return this.authService.isLoading; }
-
-  get Error() { return this.authService.isError; }
+  // Getter para estado de loading y error del servicio
+  get isLoadingRegister() { return this.roleService.isLoading; }
+  get ErrorRegister() { return this.roleService.isError; }
 
 
   constructor() {
@@ -73,11 +76,18 @@ export class Register {
       if (this.errorMessage()) {
         this.errorMessage.set('');
       }
+      console.log('Form value changed:', this.loginForm.value);
     });
 
     effect(() => {
-      console.log(this.Error())
+      console.log(this.loginForm.value)
     });
+
+    // Cargar roles al iniciar el componente
+    this.roleService.getRoles().subscribe(roles => {
+      this.roles.set(roles.data)
+    });
+
   }
 
   /**
@@ -90,7 +100,8 @@ export class Register {
     if (this.loginForm.valid) {
       const credentials: LoginRequest = {
         usuario: this.username?.value,  // ← Cambiar a 'usuario'
-        password: this.password?.value
+        password: this.password?.value,
+        rol_id: Number(this.rol_id?.value)
       };
 
       console.log('Login credentials:', credentials);

@@ -35,19 +35,6 @@ export class Login {
   get Error() { return this.authService.isError; }
 
 
-  constructor() {
-    // Limpiar mensaje de error cuando el usuario escriba
-    this.loginForm.valueChanges.subscribe(() => {
-      if (this.errorMessage()) {
-        this.errorMessage.set('');
-      }
-    });
-
-    effect(() => {
-      console.log(this.Error())
-    });
-  }
-
   /**
    * Procesar login
    */

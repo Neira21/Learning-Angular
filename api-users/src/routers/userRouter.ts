@@ -5,7 +5,7 @@ import { authMiddleware, roleMiddleware } from "../middlewares/authMiddleware.js
 const userRouter: Router = Router();
 
 // Rutas protegidas - requieren autenticación
-userRouter.get("/users", UserController.getUsers);
+userRouter.get("/users", authMiddleware, roleMiddleware(['admin']), UserController.getUsers);
 userRouter.get("/users/:id", authMiddleware, roleMiddleware(['admin']), UserController.getUserById);
 
 // Rutas de administrador - requieren autenticación y rol específico

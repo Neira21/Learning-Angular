@@ -19,12 +19,13 @@ export class AuthController {
         return;
       }
 
-      const { usuario, password }: CreateUserData = req.body;
+      const { usuario, password, rol_id }: CreateUserData = req.body;
 
       // Validación de datos
       const validation = RegisterUserSchema.safeParse({
         usuario,
         password,
+        rol_id: rol_id || 2, // Rol 'user' por defecto
       });
 
       if (!validation.success) {
@@ -53,7 +54,7 @@ export class AuthController {
       const newUserData: CreateUserData = {
         usuario: usuario,
         password: hashedPassword,
-        rol_id: 2, // Rol 'user' por defecto
+        rol_id: rol_id || 2 , // Rol 'user' por defecto
       };
 
       // createUser devuelve User (con rol expandido)

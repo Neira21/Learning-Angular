@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // Esquema para User
 export const UserSchema = z.object({
-  id: z.number().min(1, 'El ID debe ser un número positivo').optional(),
+  id: z.number().min(1, 'El ID debe ser un número positivo'),
   usuario: z.string()
     .min(3, 'El usuario debe tener al menos 3 caracteres')
     .max(50, 'El usuario no puede exceder 50 caracteres')
@@ -10,7 +10,7 @@ export const UserSchema = z.object({
   password: z.string()
     .min(6, 'La contraseña debe tener al menos 6 caracteres')
     .max(20, 'La contraseña no puede exceder 20 caracteres'),
-  rol_id: z.number()
+  rol_id: z.number("El rol_id debe ser un número")
     .positive('El rol_id debe ser un número positivo').optional(),
 });
 
@@ -45,9 +45,9 @@ export const CreateUserSchema = UserSchema.omit({ id: true });
 
 
 // Tipos inferidos de los esquemas (para usar en TypeScript)
-export type UserType = z.infer<typeof UserSchema>;
-export type RolType = z.infer<typeof RolSchema>;
-export type LoginType = z.infer<typeof LoginSchema>;
-export type AuthResponseType = z.infer<typeof AuthResponseSchema>;
-export type RegisterUserType = z.infer<typeof RegisterUserSchema>;
-export type CreateUserType = z.infer<typeof CreateUserSchema>;
+// export type UserType = z.infer<typeof UserSchema>;
+// export type RolType = z.infer<typeof RolSchema>;
+// export type LoginType = z.infer<typeof LoginSchema>;
+// export type AuthResponseType = z.infer<typeof AuthResponseSchema>;
+// export type RegisterUserType = z.infer<typeof RegisterUserSchema>;
+// export type CreateUserType = z.infer<typeof CreateUserSchema>;

@@ -2,27 +2,27 @@
   <!-- Overlay de loading global -->
 
 
-  @if(Error()){
+  @if(ErrorRegister()){
     <div class="error-overlay">
       <div class="error-content">
-        <p>❌ Error: {{ Error() }}</p>
+        <p>❌ Error al cargar la información</p>
       </div>
     </div>
   }
 
 
-  @if (isLoading()) {
+  @if (isLoadingRegister()) {
     <div class="loading-overlay">
       <div class="loading-content">
         <div class="loading-spinner-large"></div>
-        <h3>Verificando credenciales...</h3>
+        <h3>Cargando datos...</h3>
         <p>Por favor espera un momento</p>
       </div>
     </div>
   }
 
   <div class="login-card"
-       [class.blur]="isLoading()">
+       [class.blur]="isLoadingRegister()">
     <!-- Header -->
     <div class="login-header">
       <h2>🧑🏻 Registrar Nuevo Usuario</h2>
@@ -107,14 +107,26 @@
         }
       </div>
 
+      <!-- Campo Rol -->
+      <div class="form-group">
+        <label for="rol">Elige el Rol</label>
+        <select name="rol" id="rol" class="form-control" formControlName="rol_id">
+          @for (role of roles(); track role.id) {
+            <option [value]="role.id">{{ role.nombre }}</option>
+          }
+        </select>
+      </div>
+
+
+
       <!-- Botón de login -->
       <button
         type="submit"
         class="login-button"
-        [class.loading]="isLoading()"
-        [disabled]="isLoading() || loginForm.invalid"
+        [class.loading]="isLoadingRegister()"
+        [disabled]="isLoadingRegister() || loginForm.invalid"
       >
-        @if (isLoading()) {
+        @if (isLoadingRegister()) {
           <div class="loading-text">
             <span class="loading-spinner"></span>
             Iniciando sesión...

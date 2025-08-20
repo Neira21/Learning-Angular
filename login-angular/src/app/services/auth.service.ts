@@ -24,6 +24,7 @@ export interface ErrorResponse{
 export interface LoginRequest {
   usuario: string;  // ← Cambiar a 'usuario' para coincidir con la API
   password: string;
+  rol_id?: number;
 }
 
 // Modelo del usuario
@@ -47,7 +48,7 @@ export class AuthService {
   isAuthenticated = signal<boolean>(false);
   isLoading = signal<boolean>(false);
   currentUser = signal<User | null>(null);
-  isError = signal<boolean>(false);
+  isError = signal<string | null>(null);
 
   http = inject(HttpClient);
 
@@ -63,11 +64,11 @@ export class AuthService {
       localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
       this.isAuthenticated.set(true);
       this.currentUser.set(response.user);
-      this.isError.set(false);
+      this.isError.set(null);
     } else {
       this.isAuthenticated.set(false);
       this.currentUser.set(null);
-      this.isError.set(true);
+      this.isError.set(response.message || 'Error desconocido');
     }
     this.isLoading.set(false);
     return response;
@@ -78,7 +79,7 @@ export class AuthService {
    */
   private handleAuthError(error: any): Observable<ErrorResponse> {
     this.isLoading.set(false);
-    this.isError.set(true);
+    this.isError.set(error?.error?.message || 'Error de conexión con el servidor');
     console.error('❌ Error en autenticación:', error);
     return throwError(() => ({
       success: false,
@@ -173,17 +174,6 @@ export class AuthService {
   }
 
   /**
-   * Método público para verificar estado de autenticación
-   */
-  // checkAuthenticationStatus(): boolean {
-  //   this.checkAuthStatus();
-  //   return this.isAuthenticated();
-  // }
-
-  /**
-   * Registro de usuario (para API real)
-   */
-  /**
    * Registro de usuario (misma respuesta que login)
    */
   register(userData: LoginRequest): Observable<LoginResponse> {
@@ -200,25 +190,5 @@ export class AuthService {
    * Verificar token con API (para refresh automático)
    */
 
-
-  /**
-   * Cambiar contraseña (para API real)
-   */
-  changePassword(
-    oldPassword: string,
-    newPassword: string
-  ): Observable<{ success: boolean; message: string }> {
-    const token = this.getToken();
-
-    return this.http.post<{ success: boolean; message: string }>(
-      `${this.API_URL}/auth/change-password`,
-      {
-        oldPassword,
-        newPassword,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-  }
 }
+
