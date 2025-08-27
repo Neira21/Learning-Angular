@@ -1,27 +1,70 @@
-# TodoAppAngular
+# 📝 TodoApp Angular - Introducción
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+**Proyecto de introducción a Angular** que implementa una aplicación de gestión de tareas (Todo App) para aprender los conceptos fundamentales del framework.
 
-## Development server
+## 🎯 Objetivo del Proyecto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este proyecto sirve como introducción práctica a Angular, cubriendo:
 
-## Code scaffolding
+- Componentes y sus ciclos de vida
+- Data binding (one-way y two-way)
+- Directivas estructurales (*ngFor, *ngIf)
+- Servicios y dependency injection
+- Formularios básicos
+- Estilos con TailwindCSS y Angular Material
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🛠️ Tecnologías Utilizadas
 
-## Build
+- **Angular 17** - Framework principal
+- **Angular Material** - Componentes UI
+- **TailwindCSS** - Framework de estilos
+- **TypeScript** - Lenguaje de programación
+- **RxJS** - Programación reactiva
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🚀 Comandos de Desarrollo
 
-## Running unit tests
+### Servidor de desarrollo
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+ng serve
+```
 
-## Running end-to-end tests
+Navega a `http://localhost:4200/`. La aplicación se recarga automáticamente al cambiar los archivos.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Generar código
 
-## Further help
+```bash
+ng generate component component-name
+ng generate directive|pipe|service|class|guard|interface|enum|module
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Build de producción
+
+```bash
+ng build
+```
+
+Los archivos se almacenan en el directorio `dist/`.
+
+### Tests unitarios
+
+```bash
+ng test
+```
+
+Ejecuta las pruebas unitarias via [Karma](https://karma-runner.github.io).
+
+## 📚 Conceptos Aprendidos
+
+1. **Componentes**: Estructura básica, decoradores, propiedades
+2. **Templates**: Interpolación, property binding, event binding
+3. **Directivas**: *ngFor, *ngIf, \*ngSwitch
+4. **Servicios**: Inyección de dependencias, singleton pattern
+5. **Formularios**: Template-driven forms, validaciones
+6. **Estilos**: Component styles, global styles, CSS frameworks
+
+## 🔗 Referencias
+
+- [Angular CLI](https://angular.io/cli)
+- [Angular Material](https://material.angular.io/)
+- [TailwindCSS](https://tailwindcss.com/)
