@@ -1,0 +1,13 @@
+{
+  "name": "typescriptangularcourse",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
