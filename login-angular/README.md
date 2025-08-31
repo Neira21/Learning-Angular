@@ -1,59 +1,93 @@
-# LoginAngular
+# 🛡️ Proyecto de Login con Angular 20 y Express
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+Este proyecto es una práctica para comprender los fundamentos de autenticación y autorización en aplicaciones web. Consta de dos partes principales:
 
-## Development server
+Backend (API): Construido con Express.js.
 
-To start a local development server, run:
+Frontend (Cliente): Construido con Angular 20.
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+El objetivo es implementar un flujo de login completo con JWT, Local Storage, guards, manejo de errores y protección de rutas.
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## ✅ Características
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Autenticación con JWT en el backend.
 
-```bash
-ng generate --help
-```
+Login en Angular consumiendo la API REST.
 
-## Building
+Almacenamiento seguro del token en Local Storage.
 
-To build the project run:
+Route Guards para proteger rutas en el frontend.
 
-```bash
-ng build
-```
+Interceptors HTTP para enviar el token en cada petición.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Manejo de errores en frontend y backend.
 
-## Running unit tests
+Logout con limpieza de token.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## ⚙️ Tecnologías Utilizadas
 
-```bash
-ng e2e
-```
+Backend:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Node.js
 
-## Additional Resources
+Express.js
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+jsonwebtoken para la generación y validación de tokens.
+
+Frontend:
+
+Angular 20
+
+RxJS
+
+Angular Router para las rutas protegidas.
+
+HTTPClient para las peticiones a la API.
+
+---
+
+
+## 🔑 Flujo de Autenticación
+
+1. El usuario ingresa email y contraseña en el formulario de login.
+
+
+2. El frontend envía la petición POST /login al backend.
+
+
+3. El backend valida credenciales y responde con un JWT.
+
+
+4. El frontend guarda el token en Local Storage.
+
+
+5. Route Guards verifican el token antes de entrar a rutas privadas.
+
+
+6. En cada petición, se envía el token en el Authorization Header.
+
+
+7. Logout limpia el token del Local Storage.
+
+
+
+
+---
+
+✅ Funcionalidades Clave en el Frontend
+
+Auth Service para login/logout y manejo del token.
+
+HTTP Interceptor para añadir el token en las peticiones.
+
+Auth Guard para proteger rutas privadas.
+
+Manejo global de errores (401, 403, etc.).
