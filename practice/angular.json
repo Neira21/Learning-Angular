@@ -9,7 +9,11 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "css",
-          "changeDetection": "OnPush"
+          "changeDetection": "OnPush",
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         }
       },
 

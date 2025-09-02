@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.component.html": "html"
+  },
+  "emmet.includeLanguages": {
+    "html": "html"
+  },
+  "[html]": {
+    "editor.suggest.insertMode": "replace",
+    "editor.formatOnSave": true
+  }
+}

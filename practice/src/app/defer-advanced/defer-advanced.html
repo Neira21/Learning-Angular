@@ -1,0 +1,80 @@
+<h3>DataReady</h3>
+@defer(when isImageVisible() ){
+<img
+  src="https://angular.io/assets/images/logos/angular/angular.png"
+  alt="Angular Logo"
+/>
+}@placeholder{
+<p>Aquí va la imagen</p>
+}
+
+<h3>Idle</h3>
+<!-- Cuando el browser este disponible ahi lo va a cargar, osea cuando ya no tenga que hacer nada -->
+@defer(on idle ){
+<img
+  src="https://angular.io/assets/images/logos/angular/angular.png"
+  alt="Angular Logo"
+/>
+}@placeholder{
+<p>Aquí va la imagen</p>
+}
+
+<h3>interaction</h3>
+@defer( on interaction){
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="" />
+}@placeholder{
+<p>Interacua conmigo</p>
+}
+
+<h3>TriggerElement</h3>
+<div #triggerElement>Haz Click aquí</div>
+@defer( on interaction(triggerElement)){
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="" />
+}@placeholder{
+<p>Aquí va la imagen</p>
+}
+
+<h3>Hover</h3>
+<div #triggerElement>Pasa el mouse sobre mí</div>
+
+@defer( on hover(triggerElement)){
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="" />
+}@placeholder{
+<p>Aquí va la imagen</p>
+}
+<p>
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto pariatur cum,
+  eligendi amet esse consequatur numquam quas reiciendis. Beatae, aliquid
+  consequatur? Corrupti facere expedita delectus hic maiores omnis, illum minus
+  id nulla eaque, fugit aliquid quae totam veritatis exercitationem officia
+  autem quibusdam nesciunt natus saepe vel illo laboriosam? Quae libero quod
+  dolores ab, adipisci accusantium explicabo blanditiis nemo ipsam debitis dolor
+  aliquid similique necessitatibus! Omnis voluptatem eveniet aliquid tempore
+  esse et blanditiis obcaecati odio quis quasi nemo ullam vel ad molestiae quo
+  vitae similique nobis eaque nihil, vero necessitatibus consequuntur aliquam
+  corrupti? Quo voluptatem deserunt reiciendis facere fuga architecto suscipit.
+</p>
+<h3>ViewPort</h3>
+@defer(on viewport; prefetch on idle){
+<img
+  src="https://angular.io/assets/images/logos/angular/angular.png"
+  alt="Angular Logo"
+/>
+}@placeholder{
+<p>Aquí va la imagen</p>
+}
+
+<h3>Timer</h3>
+@defer( on timer(3s)){
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="" />
+}@placeholder{
+<p>Imagen en 3 segundos</p>
+}
+
+<!-- El prefetch carga los datos si se tiene los recursos necesarios -->
+<h3>Prefetch</h3>
+@defer(on interaction; prefetch on idle){
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="" />
+}@placeholder{
+<p>Aquí va la imagen</p>
+}

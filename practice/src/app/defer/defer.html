@@ -1,0 +1,35 @@
+<!-- @defer (when isImageVisible()){
+<img
+  src="https://angular.io/assets/images/logos/angular/angular.png"
+  alt="Angular Logo"
+/>
+<img src="https://placehold.co/600x400/EEE/31343C" alt="" >
+<img
+  src="https://httpbin.org/robots.txt"
+  height="600"
+  width="600"
+  alt="No hay imagen"
+/>
+} @loading (minimum 2000ms) {
+<div style="border: 2px dashed #007bff; padding: 20px">
+  🔄 Cargando imagen...
+  <div class="spinner"></div>
+</div>
+} @placeholder{
+<div>Aquí va la imagen</div>
+} @error {
+<div style="color: red; border: 1px solid red; padding: 10px">
+  ❌ Error al cargar la imagen
+  <small>La imagen /imagen-que-no-existe.jpg no se encontró</small>
+</div>
+} -->
+
+@defer (when isImageVisible()){
+<iframe src="https://example.com/forbidden"></iframe>
+}@placeholder{
+<div>Aquí va la imagen</div>
+} @error {
+<p style="color: red; border: 1px solid red; padding: 10px">
+  ❌ Error al cargar la imagen
+</p>
+}
