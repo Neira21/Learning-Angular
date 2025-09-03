@@ -1,1 +1,27 @@
-<p>service works!</p>
+<h1>{{ title() }}</h1>
+
+@if (error()) {
+<div class="error">
+  <p>❌ Error al cargar personajes</p>
+  <p><strong>Mensaje:</strong> {{ error()?.message }}</p>
+</div>
+}@else{ @if (apiResponse(); as characters) {
+<h2>Personajes de Rick and Morty</h2>
+<div class="info-section">
+  @for (item of characters.info | keyvalue; track item.key) {
+  <p>
+    <strong>{{ item.key }}:</strong> {{ item.value }}
+  </p>
+  }
+</div>
+
+<div class="characters-grid">
+  @for (character of characters.results; track character.id) {
+  <app-service-element [character]="character"></app-service-element>
+  }
+</div>
+} @else {
+<div class="loading">
+  <p>🔄 Cargando personajes...</p>
+</div>
+} }

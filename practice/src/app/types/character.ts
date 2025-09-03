@@ -28,3 +28,10 @@ export interface Character {
   url: string;
   created: string;
 }
+
+export interface CharacterExample {
+  id: number;
+  name: string;
+  lastName: string;
+  age: number;
+}

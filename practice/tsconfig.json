@@ -21,6 +21,7 @@
       "@environments/*": ["src/environments/*"],
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
+      "@types/*": ["src/app/types/*"]
 
 
     }

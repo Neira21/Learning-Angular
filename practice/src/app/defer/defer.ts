@@ -5,12 +5,14 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ErrorComponent } from '@app/error/error';
+//import { ErrorComponent } from '@app/error/error';
 
 @Component({
   selector: 'app-defer',
   standalone: true,
-  imports: [ErrorComponent],
+  imports: [
+    //ErrorComponent
+  ],
   templateUrl: './defer.html',
   styleUrl: './defer.css',
   //changeDetection: ChangeDetectionStrategy.OnPush,
