@@ -1,0 +1,9 @@
+<p>form works!</p>
+
+<div>
+  <button (click)="addItem()">Agrega Nuevo Item</button>
+
+  @for(formGroup of items(); track formGroup.controls.id.value){
+  <app-form-child [formGroup]="formGroup"></app-form-child>
+  }
+</div>

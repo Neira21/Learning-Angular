@@ -1,5 +1,5 @@
 import { CharacterExample } from '@app/types/character';
-import { Component, signal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 // import { MiDirectiva } from '@app/directivas/mi-directiva';
 // import { RouterOutlet } from '@angular/router';
 // import { Defer } from '@app/defer/defer';
@@ -7,6 +7,7 @@ import { Component, signal } from '@angular/core';
 // import { DeferAdvanced } from '@app/defer-advanced/defer-advanced';
 import { Service } from './service/service';
 import { Character } from './character/character';
+import { Form } from './form/form';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,18 @@ import { Character } from './character/character';
     //DeferAdvanced,
     //For,
     // Service,
-    Character,
+    //Character,
+    //Form,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('practice');
+  protected count = signal<number>(5);
+
+  // ✅ Método temporal para verificar
+  increment() {
+    this.count.update((value) => value + 1);
+  }
 }
