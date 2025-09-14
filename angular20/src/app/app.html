@@ -1,3 +1,26 @@
 <h1>{{ title() }}</h1>
 
-<p>responseSignal: {{ responseSignal() | json }}</p>
+<!-- <p>responseSignal: {{ responseSignal() }}</p> -->
+
+<button (click)="addPokemon()">Agregar Pokemon</button>
+@if(isLoading()) {
+<p>🔄 Cargando Pokemons...</p>
+} @else if(!responseSignal()) {
+<p>❌ No se pudieron cargar los Pokemons.</p>
+}@else{
+<div class="pokemon-grid">
+  @if(responseSignal()) { @for(pokemon of responseSignal() ?? []; track
+  pokemon.name) {
+  <div class="pokemon-card">
+    <img [src]="pokemon.image" [alt]="pokemon.name" />
+    <h3>{{ pokemon.name }}</h3>
+    <p><strong>Height:</strong> {{ pokemon.height }}</p>
+    <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+    <!-- <p>
+    <strong>Types:</strong> {{ pokemon.types.map(t => t.type.name).join(', ') }}
+  </p> -->
+  </div>
+  } }
+</div>
+
+}

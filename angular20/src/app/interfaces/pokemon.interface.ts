@@ -16,20 +16,28 @@ export interface PokemonBasic {
 export interface Pokemon {
   id: number;
   name: string;
+  types: PokemonType[];
+  height: number;
+  weight: number;
+  image: string;
+  abilities: PokemonAbility[];
+  stats: PokemonStat[];
+}
+
+export interface PokemonData {
+  id: number;
+  name: string;
+  types: PokemonType[];
   height: number;
   weight: number;
   sprites: PokemonSprites;
-  types: PokemonType[];
   abilities: PokemonAbility[];
   stats: PokemonStat[];
 }
 
 // Interfaz para los sprites (imágenes)
 export interface PokemonSprites {
-  front_default: string | null;
-  front_shiny: string | null;
-  back_default: string | null;
-  back_shiny: string | null;
+  front_default: string;
 }
 
 // Interfaz para los tipos
