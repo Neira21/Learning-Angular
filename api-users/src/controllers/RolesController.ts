@@ -52,7 +52,6 @@ export class RolesController {
         data: newRol,
       });
     } catch (error) {
-      console.log("error llego aca")
       res.status(400).json({
         success: false,
         message: "Error al crear rol",
