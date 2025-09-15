@@ -19,8 +19,11 @@ export class ApiService {
       .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=151')
       .pipe(
         switchMap((response) => {
-          const details = response.results.map((pokemon) =>
-            this.http.get<PokemonData>(pokemon.url).pipe(
+          const details = response.results.map((pokemon) => {
+            const pokemonId = this.extractIdFromUrl(pokemon.url);
+            const individual = `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`;
+
+            return this.http.get<PokemonData>(individual).pipe(
               map((detail) => ({
                 id: detail.id,
                 name: detail.name,
@@ -30,12 +33,21 @@ export class ApiService {
                 weight: detail.weight,
                 abilities: detail.abilities,
                 stats: detail.stats,
+                isFavorite: Math.random() < 0.5,
               }))
-            )
+            );
+          });
+          return forkJoin(details).pipe(
+            map((results) => results.filter(Boolean))
           );
-          return forkJoin(details);
         })
       );
+  }
+
+  private extractIdFromUrl(url: string): number {
+    const segments = url.split('/');
+    const id = Number(segments[6]);
+    return id;
   }
 
   getPokemonWithData2() {

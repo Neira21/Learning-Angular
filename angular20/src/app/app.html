@@ -2,6 +2,38 @@
 
 <!-- <p>responseSignal: {{ responseSignal() }}</p> -->
 
+<section id="list-roles">
+  <h1>Lista de roles</h1>
+
+  <form action="">
+    <input
+      type="text"
+      placeholder="Nombre del rol"
+      [(ngModel)]="newRoleName"
+      name="roleName"
+    />
+    <button (click)="addRole()">Agregar Rol</button>
+  </form>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%">
+    @for(role of rolesList(); track role.id) {
+    <div
+      style="
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        min-width: 150px;
+      "
+    >
+      <p>ID: {{ role.id }}</p>
+      <h3>{{ role.nombre }}</h3>
+    </div>
+    }
+  </div>
+</section>
+
 <button (click)="addPokemon()">Agregar Pokemon</button>
 @if(isLoading()) {
 <p>🔄 Cargando Pokemons...</p>
@@ -10,17 +42,39 @@
 }@else{
 <div class="pokemon-grid">
   @if(responseSignal()) { @for(pokemon of responseSignal() ?? []; track
-  pokemon.name) {
+  pokemon.name) { @defer (on viewport){
   <div class="pokemon-card">
     <img [src]="pokemon.image" [alt]="pokemon.name" />
     <h3>{{ pokemon.name }}</h3>
     <p><strong>Height:</strong> {{ pokemon.height }}</p>
     <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-    <!-- <p>
-    <strong>Types:</strong> {{ pokemon.types.map(t => t.type.name).join(', ') }}
-  </p> -->
+    <p>
+      <strong>Types:</strong>
+      @for(typeInfo of pokemon.types; track typeInfo.slot) {
+      <span
+        class="type-badge"
+        [style.background-color]="addColorByType(typeInfo.type.name)"
+      >
+        {{ typeInfo.type.name | titlecase }}
+      </span>
+      }
+    </p>
+
+    <p>
+      <strong>Favorite:</strong>
+      @if(pokemon.isFavorite) {
+      <span class="favorite">⭐ Yes</span>
+      } @else {
+      <span class="not-favorite">❌ No</span>
+      }
+    </p>
   </div>
-  } }
+  } @placeholder{
+  <section class="pokemon-card-skeleton">
+    <div class="skeleton-image"></div>
+    <div class="skeleton-text"></div>
+  </section>
+  } } }
 </div>
 
 }

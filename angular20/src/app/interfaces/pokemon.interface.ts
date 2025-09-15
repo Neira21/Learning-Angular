@@ -22,6 +22,7 @@ export interface Pokemon {
   image: string;
   abilities: PokemonAbility[];
   stats: PokemonStat[];
+  isFavorite?: boolean; // ← Nueva propiedad opcional
 }
 
 export interface PokemonData {
