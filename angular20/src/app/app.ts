@@ -12,6 +12,7 @@ import { userroles } from './services/usersroles.service';
 
 import { role, rolesResponse } from './services/usersroles.service';
 import { ImagePokePipe } from './image-poke-pipe';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -246,4 +247,12 @@ export class App {
 
   // Usando async pipe
   protected readonly pokeListAsync = this.apiService.getPokemonWithData();
+
+  // usando tosignal
+
+  // convierte el observable en signal
+  protected readonly pokeListSignal = toSignal(
+    this.apiService.getPokemonWithData(),
+    { initialValue: null }
+  );
 }

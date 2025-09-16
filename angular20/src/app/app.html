@@ -168,7 +168,7 @@
 }
 
 <section>
-  <h3>Lista de pokemon usando Resource</h3>
+  <h3>Lista de pokemon usando HttpResource</h3>
   @if (pokeListResource.isLoading()) {
   <p>Cargando pokemons...</p>
   } @else if(pokeListResource.error()) {
@@ -194,6 +194,27 @@
     <div class="pokemon-card">
       <h3>{{ pokemon.name }}</h3>
       <img [src]="pokemon.image" [alt]="pokemon.name" />
+    </div>
+    }
+  </div>
+</section>
+
+<section>
+  <h2>Lista de pokemon usando toSignal</h2>
+
+  <div class="pokemon-grid">
+    @for(pokemon of pokeListSignal(); track pokemon.name) {
+    <div class="pokemon-card">
+      <h3>{{ pokemon.name }}</h3>
+      <img [src]="pokemon.image" [alt]="pokemon.name" />
+      <p>
+        <strong>Favorite:</strong>
+        @if(pokemon.isFavorite) {
+        <span class="favorite">⭐ Yes</span>
+        } @else {
+        <span class="not-favorite">❌ No</span>
+        }
+      </p>
     </div>
     }
   </div>

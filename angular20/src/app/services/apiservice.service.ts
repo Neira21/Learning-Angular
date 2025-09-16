@@ -22,7 +22,7 @@ export class ApiService {
   // ✅ Método 1: httpResource directo para datos estáticos con tipado
   getPokemonWithData() {
     return this.http
-      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=151')
+      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=20')
       .pipe(
         switchMap((response) => {
           const details = response.results.map((pokemon) => {
@@ -58,7 +58,7 @@ export class ApiService {
 
   getPokemonWithData2() {
     return this.http
-      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=151')
+      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=20')
       .pipe(
         map((res) => res.results),
         switchMap((pokemons) =>
@@ -87,11 +87,7 @@ export class ApiService {
 
   getPokemonListResource(): HttpResourceRef<PokemonListResponse | undefined> {
     return httpResource<PokemonListResponse>(
-      () => `${this.pokeUrl}/pokemon?limit=151`
+      () => `${this.pokeUrl}/pokemon?limit=20`
     );
-  }
-
-  getPokemonDetailResource(name: string) {
-    return httpResource<PokemonData>(() => `${this.pokeUrl}/pokemon/${name}`);
   }
 }
