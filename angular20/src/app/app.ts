@@ -2,7 +2,7 @@ import { Component, signal, inject, effect, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './services/apiservice.service';
 import { FormsModule } from '@angular/forms';
-import { TitleCasePipe, JsonPipe } from '@angular/common';
+import { TitleCasePipe, JsonPipe, AsyncPipe } from '@angular/common';
 import {
   Pokemon,
   PokemonData,
@@ -11,6 +11,7 @@ import {
 import { userroles } from './services/usersroles.service';
 
 import { role, rolesResponse } from './services/usersroles.service';
+import { ImagePokePipe } from './image-poke-pipe';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ import { role, rolesResponse } from './services/usersroles.service';
     //RouterOutlet,
     FormsModule,
     TitleCasePipe,
+    ImagePokePipe,
+    AsyncPipe,
     //JsonPipe
   ],
   templateUrl: './app.html',
@@ -35,8 +38,8 @@ export class App {
   protected newRoleName = signal('');
 
   // ✅ Inyectar el servicio con protected para usar en template
-  protected apiService = inject(ApiService);
-  protected rolService = inject(userroles);
+  private readonly apiService = inject(ApiService);
+  private readonly rolService = inject(userroles);
 
   protected readonly isLoading = signal(false);
   protected readonly error = signal('');
@@ -236,4 +239,11 @@ export class App {
     this.method2Time.set(null);
     this.isLoading.set(false);
   }
+
+  // Usando httpresource para angular20
+  protected readonly pokeListResource =
+    this.apiService.getPokemonListResource();
+
+  // Usando async pipe
+  protected readonly pokeListAsync = this.apiService.getPokemonWithData();
 }

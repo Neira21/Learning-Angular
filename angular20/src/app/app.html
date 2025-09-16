@@ -166,3 +166,35 @@
 </div>
 
 }
+
+<section>
+  <h3>Lista de pokemon usando Resource</h3>
+  @if (pokeListResource.isLoading()) {
+  <p>Cargando pokemons...</p>
+  } @else if(pokeListResource.error()) {
+  <p style="color: red">Error cargando pokemons</p>
+  } @else {
+  <div class="pokemon-grid">
+    @let pokelist = pokeListResource.value(); @for(pokemon of pokelist?.results;
+    track pokemon.name) {
+    <div class="pokemon-card">
+      <h3>{{ pokemon.name }}</h3>
+      <img [src]="pokemon.url | imagePoke" [alt]="pokemon.name" />
+    </div>
+    }
+  </div>
+
+  }
+</section>
+
+<section>
+  <h2>Lista de pokemon usando async pipe</h2>
+  <div class="pokemon-grid">
+    @for(pokemon of pokeListAsync | async; track pokemon.name) {
+    <div class="pokemon-card">
+      <h3>{{ pokemon.name }}</h3>
+      <img [src]="pokemon.image" [alt]="pokemon.name" />
+    </div>
+    }
+  </div>
+</section>

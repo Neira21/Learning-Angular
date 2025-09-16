@@ -1,5 +1,9 @@
 import { concatMap, forkJoin, from, map, switchMap, toArray } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  httpResource,
+  HttpResourceRef,
+} from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import {
   Pokemon,
@@ -12,6 +16,8 @@ import {
 })
 export class ApiService {
   private http = inject(HttpClient);
+
+  readonly pokeUrl = 'https://pokeapi.co/api/v2';
 
   // ✅ Método 1: httpResource directo para datos estáticos con tipado
   getPokemonWithData() {
@@ -75,5 +81,17 @@ export class ApiService {
           )
         )
       );
+  }
+
+  //using httpresource for angular 20
+
+  getPokemonListResource(): HttpResourceRef<PokemonListResponse | undefined> {
+    return httpResource<PokemonListResponse>(
+      () => `${this.pokeUrl}/pokemon?limit=151`
+    );
+  }
+
+  getPokemonDetailResource(name: string) {
+    return httpResource<PokemonData>(() => `${this.pokeUrl}/pokemon/${name}`);
   }
 }
