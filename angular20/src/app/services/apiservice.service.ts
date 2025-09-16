@@ -52,7 +52,7 @@ export class ApiService {
 
   getPokemonWithData2() {
     return this.http
-      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=20')
+      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=151')
       .pipe(
         map((res) => res.results),
         switchMap((pokemons) =>

@@ -15,6 +15,10 @@
     <button (click)="addRole()">Agregar Rol</button>
   </form>
 
+  @if(error()) {
+  <p style="color: red">❌ {{ error() }}</p>
+  }
+
   <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%">
     @for(role of rolesList(); track role.id) {
     <div
@@ -34,11 +38,95 @@
   </div>
 </section>
 
+<hr />
+
+<!-- ✅ Panel de testing de métodos -->
+<section
+  id="performance-test"
+  style="
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  "
+>
+  <h2>🚀 Performance Test - Pokémon API</h2>
+
+  <div style="display: flex; gap: 10px; margin-bottom: 15px">
+    <button
+      (click)="testMethod1()"
+      [disabled]="isTestingMethod1() || isTestingMethod2()"
+      style="
+        background: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+      "
+    >
+      @if(isTestingMethod1()) { 🔄 Testing Método 1... } @else { 🚀 Test Método
+      1 (forkJoin) }
+    </button>
+
+    <button
+      (click)="testMethod2()"
+      [disabled]="isTestingMethod1() || isTestingMethod2()"
+      style="
+        background: #2196f3;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+      "
+    >
+      @if(isTestingMethod2()) { 🔄 Testing Método 2... } @else { 🐌 Test Método
+      2 (concatMap) }
+    </button>
+
+    <button
+      (click)="clearResults()"
+      style="
+        background: #f44336;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+      "
+    >
+      🗑️ Limpiar
+    </button>
+  </div>
+
+  <!-- ✅ Resultados de timing -->
+  <div style="display: flex; gap: 20px">
+    @if(method1Time()) {
+    <div style="padding: 10px; background: #e8f5e8; border-radius: 4px">
+      <strong>✅ Método 1 (forkJoin):</strong> {{ method1Time() }}ms
+    </div>
+    } @if(method2Time()) {
+    <div style="padding: 10px; background: #e3f2fd; border-radius: 4px">
+      <strong>✅ Método 2 (concatMap):</strong> {{ method2Time() }}ms
+    </div>
+    } @if(method1Time() && method2Time()) {
+    <div style="padding: 10px; background: #fff3e0; border-radius: 4px">
+      <strong>🏆 Ganador:</strong>
+      @if(method1Time()! < method2Time()!) { Método 1 es
+      {{ Math.round((method2Time()! / method1Time()!) * 10) / 10 }}x más rápido
+      } @else { Método 2 es
+      {{ Math.round((method1Time()! / method2Time()!) * 10) / 10 }}x más rápido
+      }
+    </div>
+    }
+  </div>
+</section>
+
+<hr />
+
 <button (click)="addPokemon()">Agregar Pokemon</button>
 @if(isLoading()) {
 <p>🔄 Cargando Pokemons...</p>
 } @else if(!responseSignal()) {
-<p>❌ No se pudieron cargar los Pokemons.</p>
+<p>Seleccione una opción</p>
 }@else{
 <div class="pokemon-grid">
   @if(responseSignal()) { @for(pokemon of responseSignal() ?? []; track
