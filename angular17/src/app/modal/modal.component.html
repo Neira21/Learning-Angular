@@ -1,0 +1,15 @@
+<div class="modal-backdrop">
+  <div class="modal">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2>Ingresa el valor para cambiar</h2>
+      <label for="newValue">Nuevo Valor</label>
+      <input
+        id="newValue"
+        type="text"
+        formControlName="newValue"
+        placeholder="Nuevo valor"
+      />
+      <input type="submit" value="Guardar Cambios" />
+    </form>
+  </div>
+</div>
