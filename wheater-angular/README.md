@@ -12,16 +12,14 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-
 # Example observables with RJSX nested (anidados)
-
 
 ```typescript
 
 //Clima varios lugares
 // En el servicio
 import { Injectable, inject } from '@angular/core';
-  
+
   private http = inject(HttpClient);
 
   getLocationWeather(location: string): Observable<any> {
@@ -69,11 +67,6 @@ import { Injectable, inject } from '@angular/core';
 }
 
 ```
-
-
-
-
-
 
 ```typescript
 // Example pokemon
@@ -128,6 +121,34 @@ getPokemonWithFavorite(): void {
       console.log('Pokémons con detalle + favorito:', pokemonDetails);
     });
   }
+
+
+
+// Más óptimo, usando forkJoin para paralelizar las peticiones
+getPokemonWithData() {
+    return this.http
+      .get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon?limit=151')
+      .pipe(
+        switchMap((response) => {
+          const details = response.results.map((pokemon) =>
+            this.http.get<PokemonData>(pokemon.url).pipe(
+              map((detail) => ({
+                id: detail.id,
+                name: detail.name,
+                types: detail.types,
+                image: detail.sprites.front_default,
+                height: detail.height,
+                weight: detail.weight,
+                abilities: detail.abilities,
+                stats: detail.stats,
+              }))
+            )
+          );
+          return forkJoin(details);
+        })
+      );
+  }
+
 
 
 ```
