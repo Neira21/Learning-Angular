@@ -6,9 +6,9 @@ export class UserController {
   static async getUsers(req: Request, res: Response) {
     try {
       const users = await UserService.getAllUsers();
-      
+
       // Filtrar información sensible (no devolver passwords)
-      const safeUsers: UserResponse[] = users.map(user => ({
+      const safeUsers: UserResponse[] = users.map((user) => ({
         id: user.id,
         usuario: user.usuario,
         role: user.role, // Asumiendo que 'role' es un string representando el nombre del rol
@@ -17,7 +17,7 @@ export class UserController {
       res.json({
         success: true,
         data: safeUsers,
-        error: null
+        error: null,
       });
     } catch (error) {
       res.status(500).json({
@@ -31,7 +31,7 @@ export class UserController {
   static async getUserById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      
+
       if (isNaN(id)) {
         return res.status(400).json({
           success: false,
@@ -52,7 +52,7 @@ export class UserController {
       const safeUser: UserResponse = {
         id: user.id,
         usuario: user.usuario,
-        role: user.role
+        role: user.role,
       };
 
       res.json({
@@ -72,12 +72,12 @@ export class UserController {
     try {
       const userData = req.body;
       const newUser = await UserService.createUser(userData);
-      
+
       // Filtrar información sensible
       const safeUser: UserResponse = {
         id: newUser.id,
         usuario: newUser.usuario,
-        role: newUser.role
+        role: newUser.role,
       };
 
       res.status(201).json({
@@ -118,13 +118,13 @@ export class UserController {
       const safeUser: UserResponse = {
         id: updatedUser.id,
         usuario: updatedUser.usuario,
-        role: updatedUser.role
+        role: updatedUser.role,
       };
 
       res.json({
         success: true,
         data: safeUser,
-        message: "Usuario actualizado exitosamente"
+        message: "Usuario actualizado exitosamente",
       });
     } catch (error) {
       res.status(400).json({
@@ -153,7 +153,8 @@ export class UserController {
           message: "No puedes eliminar tu propia cuenta",
         });
       }
-
+      // Sacar nombre de usuario para el mensaje
+      const userName = await UserService.getUserById(id);
       const deleted = await UserService.deleteUser(id);
 
       if (!deleted) {
@@ -165,7 +166,10 @@ export class UserController {
 
       res.json({
         success: true,
-        message: "Usuario eliminado exitosamente"
+        message: {
+          text: "Usuario eliminado exitosamente",
+          userName: userName ? userName.usuario : "Desconocido",
+        },
       });
     } catch (error) {
       res.status(500).json({

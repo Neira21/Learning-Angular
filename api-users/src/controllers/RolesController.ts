@@ -35,6 +35,7 @@ export class RolesController {
         data: role,
       });
     } catch (error) {
+      console.error(error);
       res.status(500).json({
         success: false,
         message: "Error al obtener rol",

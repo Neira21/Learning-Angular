@@ -9,7 +9,7 @@ export class RolModel {
     return rows as Rol[];
   }
 
-  static async findById(id: number): Promise<Rol> {
+  static async findById(id: number): Promise<Rol | null> {
     if (!id) {
       throw new Error("ID is required");
     }
@@ -17,10 +17,7 @@ export class RolModel {
       "SELECT * FROM roles WHERE id = ?",
       [id]
     );
-    console.log("Rol obtenido:", rows);
-    return rows.length > 0
-      ? (rows[0] as Rol)
-      : Promise.reject(new Error("User not found"));
+    return rows.length > 0 ? (rows[0] as Rol) : null;
   }
 
   static async create(rolData: Omit<Rol, "id">): Promise<Rol> {
