@@ -54,7 +54,7 @@ export class AuthController {
       const newUserData: CreateUserData = {
         usuario: usuario,
         password: hashedPassword,
-        rol_id: rol_id || 2 , // Rol 'user' por defecto
+        rol_id: rol_id || 2, // Rol 'user' por defecto
       };
 
       // createUser devuelve User (con rol expandido)
