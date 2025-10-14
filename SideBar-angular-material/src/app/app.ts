@@ -1,12 +1,24 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { Header } from './components/header/header';
+import { CustomSidenav } from './components/custom-sidenav/custom-sidenav';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatSidenavModule, Header, CustomSidenav],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('SideBar-angular-material');
+  collapse = signal(false);
+
+  constructor() {
+    effect(() => {
+      console.log(this.collapse());
+      console.log(this.width());
+    });
+  }
+
+  width = computed(() => (this.collapse() ? '64' : '250'));
 }

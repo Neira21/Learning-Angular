@@ -1,0 +1,30 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "string.template.html",
+        "settings": {
+          "foreground": "#e06c75"
+        }
+      },
+      {
+        "scope": "meta.embedded.block.html",
+        "settings": {
+          "foreground": "#61afef"
+        }
+      },
+      {
+        "scope": "punctuation.definition.tag.html",
+        "settings": {
+          "foreground": "#c678dd"
+        }
+      }
+    ]
+  },
+  "files.associations": {
+    "*.html": "html"
+  },
+  "emmet.includeLanguages": {
+    "typescript": "html"
+  }
+}
