@@ -1,0 +1,24 @@
+.sidebar-header {
+  padding-top: 24px;
+  text-align: center;
+}
+
+.sidebar-header > img {
+  background-color: black;
+  padding: 20px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.header-text {
+  > h2 {
+    margin: 8px 0 4px 0;
+    font-size: 20px;
+  }
+
+  > p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+  }
+}

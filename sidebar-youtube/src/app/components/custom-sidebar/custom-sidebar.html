@@ -1,0 +1,17 @@
+<div class="sidebar-header">
+  <img width="100" height="100" src="assets/kirby2.png" alt="" />
+  <div class="header-text">
+    <h2>Channel Name</h2>
+    <p>Alvaro Neira</p>
+  </div>
+</div>
+
+<mat-nav-list>
+  @for( item of menuItems(); track item.label){
+  <a mat-list-item>
+    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+    <span matListItemTitle>{{ item.label }}</span>
+  </a>
+
+  }
+</mat-nav-list>
