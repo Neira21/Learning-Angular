@@ -1,12 +1,45 @@
 <mat-toolbar>
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-  </button>
+  <div class="button">
+    <button mat-icon-button (click)="collapse.set(!collapse())">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div class="logo">
+      <!-- youtube logo -->
+      <h2>YouTube</h2>
+      <img width="50 " src="assets/youtube-logo.png" alt="YouTube Logo" />
+    </div>
+  </div>
+
+  <!-- Busqueda -->
+
+  <div class="search">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar" />
+      <mat-icon>search</mat-icon>
+    </div>
+    <div class="mic-icon">
+      <mat-icon>mic</mat-icon>
+    </div>
+  </div>
+
+  <!-- Opciones -->
+  <div class="right-options">
+    <div class="options">
+      <mat-icon>add</mat-icon>
+
+      <mat-icon>notifications</mat-icon>
+
+      <img width="40" height="40" src="assets/kirby2.png" alt="" />
+    </div>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav opened mode="side" [style.width]="'250px'">
-    <app-custom-sidebar />
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+    <app-custom-sidebar [collapse]="collapse()" />
   </mat-sidenav>
-  <mat-sidenav-content class="content"> </mat-sidenav-content>
+  <mat-sidenav-content class="content" [style.margin-Left]="sidenavWidth()">
+    hello
+    <router-outlet />
+  </mat-sidenav-content>
 </mat-sidenav-container>
-<router-outlet />

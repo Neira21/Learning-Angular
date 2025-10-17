@@ -1,16 +1,31 @@
 <div class="sidebar-header">
-  <img width="100" height="100" src="assets/kirby2.png" alt="" />
+  @if (collapse()) {
+  <img width="40" height="40" src="assets/kirby2.png" alt="" />
+  } @else {
+  <img
+    style="padding: 20px"
+    width="100"
+    height="100"
+    src="assets/kirby2.png"
+    alt=""
+  />
+
+  } @if (!collapse()) {
   <div class="header-text">
     <h2>Channel Name</h2>
     <p>Alvaro Neira</p>
   </div>
+
+  }
 </div>
 
 <mat-nav-list>
   @for( item of menuItems(); track item.label){
   <a mat-list-item>
     <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+    @if(!collapse()) {
     <span matListItemTitle>{{ item.label }}</span>
+    }
   </a>
 
   }
