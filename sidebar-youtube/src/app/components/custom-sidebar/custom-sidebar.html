@@ -1,4 +1,4 @@
-<div class="sidebar-header">
+<div class="sidebar-header" [class.collapsed]="collapse()">
   @if (collapse()) {
   <img width="40" height="40" src="assets/kirby2.png" alt="" />
   } @else {
@@ -19,14 +19,13 @@
   }
 </div>
 
-<mat-nav-list>
+<ul class="nav-list" [class.collapsed]="collapse()">
   @for( item of menuItems(); track item.label){
-  <a mat-list-item [routerLink]="item.path" routerLinkActive="active">
-    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+  <li class="nav-item" [routerLink]="item.path" routerLinkActive="active">
+    <mat-icon>{{ item.icon }}</mat-icon>
     @if(!collapse()) {
-    <span matListItemTitle>{{ item.label }}</span>
+    <span>{{ item.label }}</span>
     }
-  </a>
-
+  </li>
   }
-</mat-nav-list>
+</ul>

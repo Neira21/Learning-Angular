@@ -28,4 +28,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/history/history').then((m) => m.History),
   },
+  {
+    path: '',
+    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+    pathMatch: 'full',
+  },
 ];
