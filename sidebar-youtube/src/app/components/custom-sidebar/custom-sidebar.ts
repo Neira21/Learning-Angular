@@ -1,6 +1,7 @@
 import { MatIconModule } from '@angular/material/icon';
 import { Component, input, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 export type MenuItem = {
   icon: string;
@@ -10,7 +11,7 @@ export type MenuItem = {
 
 @Component({
   selector: 'app-custom-sidebar',
-  imports: [MatListModule, MatIconModule],
+  imports: [MatListModule, MatIconModule, RouterLink, RouterLinkActive],
   templateUrl: './custom-sidebar.html',
   styleUrl: './custom-sidebar.css',
 })
