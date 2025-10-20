@@ -25,17 +25,27 @@
 
   <!-- Opciones -->
   <div class="right-options">
-    <div class="options">
+    <button class="add-option">
       <mat-icon>add</mat-icon>
+      <p>Crear</p>
+    </button>
 
+    <div class="notification-option">
       <mat-icon>notifications</mat-icon>
+    </div>
 
+    <div class="image-option">
       <img width="40" height="40" src="assets/kirby2.png" alt="" />
     </div>
   </div>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+  <mat-sidenav
+    class="custom-animation"
+    opened
+    mode="side"
+    [style.width]="sidenavWidth()"
+  >
     <app-custom-sidebar [collapse]="collapse()" />
   </mat-sidenav>
   <mat-sidenav-content class="content" [style.margin-Left]="sidenavWidth()">

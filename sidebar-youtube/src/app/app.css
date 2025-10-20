@@ -64,6 +64,49 @@ mat-toolbar .search {
   gap: 16px;
 }
 
+.add-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background-color: #272727;
+  color: white;
+  border-radius: 24px;
+  font-weight: 700;
+  padding: 0px 12px;
+  font-size: 12px;
+}
+
+.notification-option {
+  display: flex;
+  position: relative;
+}
+
+.notification-option::after {
+  content: "2";
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.image-option {
+  display: flex;
+}
+
 .content {
   padding: 24px;
 }
@@ -76,4 +119,10 @@ mat-sidenav-container {
   height: calc(100vh - 64px);
 
   /* background-color: #ccc; */
+}
+
+.custom-animation {
+  transition-duration: 400ms !important;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  transition-property: width !important;
 }
