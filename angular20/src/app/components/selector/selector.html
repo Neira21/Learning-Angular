@@ -1,0 +1,18 @@
+<div cdk-overlay-origin class="trigger" #fallbackOrigin (click)="open()">
+  @if (value) {
+    <span class="symbol">{{ value.simbol }}</span>
+    <span class="name">{{ value.name }}</span>
+  }
+</div>
+
+<ng-template
+  cdk-connected-overlay
+  cdkConnectedOverlayLockPosition
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="overlayOrigin || fallbackOrigin"
+  [cdkConnectedOverlayOpen]="panelOpen()"
+  (backdropClick)="close()"
+>
+  <div>Hola</div>
+</ng-template>

@@ -13,6 +13,7 @@ import { userroles } from './services/usersroles.service';
 import { role, rolesResponse } from './services/usersroles.service';
 import { ImagePokePipe } from './image-poke-pipe';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { EmojiSelector } from './components/emoji-selector/emoji-selector';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     ImagePokePipe,
     AsyncPipe,
     //JsonPipe
+    EmojiSelector,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
