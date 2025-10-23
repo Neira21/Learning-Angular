@@ -7,3 +7,32 @@
 
 .name {
 }
+
+.panel {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.panel-container {
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.emoji-item {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.emoji-item:hover {
+  background-color: rgb(222, 239, 125);
+  border-radius: 4px;
+}

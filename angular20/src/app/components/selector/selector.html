@@ -13,6 +13,17 @@
   [cdkConnectedOverlayOrigin]="overlayOrigin || fallbackOrigin"
   [cdkConnectedOverlayOpen]="panelOpen()"
   (backdropClick)="close()"
+  (detach)="close()"
 >
-  <div>Hola</div>
+  <div class="panel">
+    <ul class="panel-container">
+      @for (emo of emojis(); track emo.name) {
+        <li class="emoji-item" (click)="selectedEmoji(emo)">
+          <span>
+            {{ emo.simbol }}
+          </span>
+        </li>
+      }
+    </ul>
+  </div>
 </ng-template>

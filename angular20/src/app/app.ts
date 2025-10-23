@@ -70,7 +70,8 @@ export class App {
     //   },
     // });
 
-    this.loadRoles();
+    // Para cargar roles desde la API
+    //this.loadRoles();
 
     // effect(() => {
     //   console.log('🔄 API Response Signal Updated:', this.responseSignal());
@@ -193,7 +194,7 @@ export class App {
         console.log(`   - Tiempo total: ${Math.round(duration)}ms`);
         console.log(`   - Pokémon obtenidos: ${data.length}`);
         console.log(
-          `   - Promedio por Pokémon: ${Math.round(duration / data.length)}ms`
+          `   - Promedio por Pokémon: ${Math.round(duration / data.length)}ms`,
         );
       },
       error: (error) => {
@@ -225,7 +226,7 @@ export class App {
         console.log(`   - Tiempo total: ${Math.round(duration)}ms`);
         console.log(`   - Pokémon obtenidos: ${data.length}`);
         console.log(
-          `   - Promedio por Pokémon: ${Math.round(duration / data.length)}ms`
+          `   - Promedio por Pokémon: ${Math.round(duration / data.length)}ms`,
         );
       },
       error: (error) => {
@@ -255,6 +256,6 @@ export class App {
   // convierte el observable en signal
   protected readonly pokeListSignal = toSignal(
     this.apiService.getPokemonWithData(),
-    { initialValue: null }
+    { initialValue: null },
   );
 }

@@ -8,7 +8,7 @@
 
 <!-- <p>responseSignal: {{ responseSignal() }}</p> -->
 
-<section id="list-roles">
+<!-- <section id="list-roles">
   <h1>Lista de roles</h1>
 
   <form action="">
@@ -42,7 +42,7 @@
     </div>
     }
   </div>
-</section>
+</section> -->
 
 <hr />
 
@@ -70,8 +70,11 @@
         border-radius: 4px;
       "
     >
-      @if(isTestingMethod1()) { 🔄 Testing Método 1... } @else { 🚀 Test Método
-      1 (forkJoin) }
+      @if (isTestingMethod1()) {
+        🔄 Testing Método 1...
+      } @else {
+        🚀 Test Método 1 (forkJoin)
+      }
     </button>
 
     <button
@@ -85,8 +88,11 @@
         border-radius: 4px;
       "
     >
-      @if(isTestingMethod2()) { 🔄 Testing Método 2... } @else { 🐌 Test Método
-      2 (concatMap) }
+      @if (isTestingMethod2()) {
+        🔄 Testing Método 2...
+      } @else {
+        🐌 Test Método 2 (concatMap)
+      }
     </button>
 
     <button
@@ -105,23 +111,29 @@
 
   <!-- ✅ Resultados de timing -->
   <div style="display: flex; gap: 20px">
-    @if(method1Time()) {
-    <div style="padding: 10px; background: #e8f5e8; border-radius: 4px">
-      <strong>✅ Método 1 (forkJoin):</strong> {{ method1Time() }}ms
-    </div>
-    } @if(method2Time()) {
-    <div style="padding: 10px; background: #e3f2fd; border-radius: 4px">
-      <strong>✅ Método 2 (concatMap):</strong> {{ method2Time() }}ms
-    </div>
-    } @if(method1Time() && method2Time()) {
-    <div style="padding: 10px; background: #fff3e0; border-radius: 4px">
-      <strong>🏆 Ganador:</strong>
-      @if(method1Time()! < method2Time()!) { Método 1 es
-      {{ Math.round((method2Time()! / method1Time()!) * 10) / 10 }}x más rápido
-      } @else { Método 2 es
-      {{ Math.round((method1Time()! / method2Time()!) * 10) / 10 }}x más rápido
-      }
-    </div>
+    @if (method1Time()) {
+      <div style="padding: 10px; background: #e8f5e8; border-radius: 4px">
+        <strong>✅ Método 1 (forkJoin):</strong> {{ method1Time() }}ms
+      </div>
+    }
+    @if (method2Time()) {
+      <div style="padding: 10px; background: #e3f2fd; border-radius: 4px">
+        <strong>✅ Método 2 (concatMap):</strong> {{ method2Time() }}ms
+      </div>
+    }
+    @if (method1Time() && method2Time()) {
+      <div style="padding: 10px; background: #fff3e0; border-radius: 4px">
+        <strong>🏆 Ganador:</strong>
+        @if (method1Time()! < method2Time()!) {
+          Método 1 es
+          {{ Math.round((method2Time()! / method1Time()!) * 10) / 10 }}x más
+          rápido
+        } @else {
+          Método 2 es
+          {{ Math.round((method1Time()! / method2Time()!) * 10) / 10 }}x más
+          rápido
+        }
+      </div>
     }
   </div>
 </section>
@@ -129,78 +141,79 @@
 <hr />
 
 <button (click)="addPokemon()">Agregar Pokemon</button>
-@if(isLoading()) {
-<p>🔄 Cargando Pokemons...</p>
-} @else if(!responseSignal()) {
-<p>Seleccione una opción</p>
-}@else{
-<div class="pokemon-grid">
-  @if(responseSignal()) { @for(pokemon of responseSignal() ?? []; track
-  pokemon.name) { @defer (on viewport){
-  <div class="pokemon-card">
-    <img [src]="pokemon.image" [alt]="pokemon.name" />
-    <h3>{{ pokemon.name }}</h3>
-    <p><strong>Height:</strong> {{ pokemon.height }}</p>
-    <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-    <p>
-      <strong>Types:</strong>
-      @for(typeInfo of pokemon.types; track typeInfo.slot) {
-      <span
-        class="type-badge"
-        [style.background-color]="addColorByType(typeInfo.type.name)"
-      >
-        {{ typeInfo.type.name | titlecase }}
-      </span>
-      }
-    </p>
+@if (isLoading()) {
+  <p>🔄 Cargando Pokemons...</p>
+} @else if (!responseSignal()) {
+  <p>Seleccione una opción</p>
+} @else {
+  <div class="pokemon-grid">
+    @if (responseSignal()) {
+      @for (pokemon of responseSignal() ?? []; track pokemon.name) {
+        @defer (on viewport) {
+          <div class="pokemon-card">
+            <img [src]="pokemon.image" [alt]="pokemon.name" />
+            <h3>{{ pokemon.name }}</h3>
+            <p><strong>Height:</strong> {{ pokemon.height }}</p>
+            <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+            <p>
+              <strong>Types:</strong>
+              @for (typeInfo of pokemon.types; track typeInfo.slot) {
+                <span
+                  class="type-badge"
+                  [style.background-color]="addColorByType(typeInfo.type.name)"
+                >
+                  {{ typeInfo.type.name | titlecase }}
+                </span>
+              }
+            </p>
 
-    <p>
-      <strong>Favorite:</strong>
-      @if(pokemon.isFavorite) {
-      <span class="favorite">⭐ Yes</span>
-      } @else {
-      <span class="not-favorite">❌ No</span>
+            <p>
+              <strong>Favorite:</strong>
+              @if (pokemon.isFavorite) {
+                <span class="favorite">⭐ Yes</span>
+              } @else {
+                <span class="not-favorite">❌ No</span>
+              }
+            </p>
+          </div>
+        } @placeholder {
+          <section class="pokemon-card-skeleton">
+            <div class="skeleton-image"></div>
+            <div class="skeleton-text"></div>
+          </section>
+        }
       }
-    </p>
+    }
   </div>
-  } @placeholder{
-  <section class="pokemon-card-skeleton">
-    <div class="skeleton-image"></div>
-    <div class="skeleton-text"></div>
-  </section>
-  } } }
-</div>
-
 }
 
 <section>
   <h3>Lista de pokemon usando HttpResource</h3>
   @if (pokeListResource.isLoading()) {
-  <p>Cargando pokemons...</p>
-  } @else if(pokeListResource.error()) {
-  <p style="color: red">Error cargando pokemons</p>
+    <p>Cargando pokemons...</p>
+  } @else if (pokeListResource.error()) {
+    <p style="color: red">Error cargando pokemons</p>
   } @else {
-  <div class="pokemon-grid">
-    @let pokelist = pokeListResource.value(); @for(pokemon of pokelist?.results;
-    track pokemon.name) {
-    <div class="pokemon-card">
-      <h3>{{ pokemon.name }}</h3>
-      <img [src]="pokemon.url | imagePoke" [alt]="pokemon.name" />
+    <div class="pokemon-grid">
+      @let pokelist = pokeListResource.value();
+      @for (pokemon of pokelist?.results; track pokemon.name) {
+        <div class="pokemon-card">
+          <h3>{{ pokemon.name }}</h3>
+          <img [src]="pokemon.url | imagePoke" [alt]="pokemon.name" />
+        </div>
+      }
     </div>
-    }
-  </div>
-
   }
 </section>
 
 <section>
   <h2>Lista de pokemon usando async pipe</h2>
   <div class="pokemon-grid">
-    @for(pokemon of pokeListAsync | async; track pokemon.name) {
-    <div class="pokemon-card">
-      <h3>{{ pokemon.name }}</h3>
-      <img [src]="pokemon.image" [alt]="pokemon.name" />
-    </div>
+    @for (pokemon of pokeListAsync | async; track pokemon.name) {
+      <div class="pokemon-card">
+        <h3>{{ pokemon.name }}</h3>
+        <img [src]="pokemon.image" [alt]="pokemon.name" />
+      </div>
     }
   </div>
 </section>
@@ -209,19 +222,19 @@
   <h2>Lista de pokemon usando toSignal</h2>
 
   <div class="pokemon-grid">
-    @for(pokemon of pokeListSignal(); track pokemon.name) {
-    <div class="pokemon-card">
-      <h3>{{ pokemon.name }}</h3>
-      <img [src]="pokemon.image" [alt]="pokemon.name" />
-      <p>
-        <strong>Favorite:</strong>
-        @if(pokemon.isFavorite) {
-        <span class="favorite">⭐ Yes</span>
-        } @else {
-        <span class="not-favorite">❌ No</span>
-        }
-      </p>
-    </div>
+    @for (pokemon of pokeListSignal(); track pokemon.name) {
+      <div class="pokemon-card">
+        <h3>{{ pokemon.name }}</h3>
+        <img [src]="pokemon.image" [alt]="pokemon.name" />
+        <p>
+          <strong>Favorite:</strong>
+          @if (pokemon.isFavorite) {
+            <span class="favorite">⭐ Yes</span>
+          } @else {
+            <span class="not-favorite">❌ No</span>
+          }
+        </p>
+      </div>
     }
   </div>
 </section>
