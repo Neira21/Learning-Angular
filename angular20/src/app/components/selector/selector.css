@@ -1,11 +1,17 @@
 .trigger {
   height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .symbol {
+  margin-right: 4px;
 }
 
 .name {
+  color: #666;
+  font-size: 12px;
 }
 
 .panel {
@@ -30,6 +36,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: 20px;
 }
 
 .emoji-item:hover {

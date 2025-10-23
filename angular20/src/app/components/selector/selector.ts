@@ -86,5 +86,6 @@ export class Selector implements MatFormFieldControl<Emoji> {
   selectedEmoji(emoji: Emoji) {
     this._value = emoji;
     this.stateChanges.next();
+    this.close();
   }
 }
