@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { StarRating } from './star-rating/star-rating';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { InputAge } from './components/input-age/input-age';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { InputAge } from './components/input-age/input-age';
     // StarRating,
     ReactiveFormsModule,
     InputAge,
+    JsonPipe,
   ],
   //templateUrl: './app.html',
   template: `
@@ -22,6 +24,11 @@ import { InputAge } from './components/input-age/input-age';
 
     <div>
       <p>value of age: {{ ageControl?.value }}</p>
+    </div>
+
+    <div>
+      <p>Valid {{ ageControl?.valid }}</p>
+      <p>Errors {{ ageControl?.errors | json }}</p>
     </div>
   `,
   styleUrl: './app.css',
@@ -46,6 +53,10 @@ export class App {
     name: this._formBuilder.control(''),
     age: this._formBuilder.control('30'),
   });
+
+  constructor() {
+    //this.ageControl?.disable();
+  }
 
   // changeAgeFather(age: string) {
   //   this.ageControl?.setValue(age);
