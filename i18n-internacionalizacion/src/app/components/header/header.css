@@ -1,0 +1,44 @@
+.header {
+  background-color: #d8cccc;
+  color: black;
+  display: flex;
+  font-size: 16px;
+  justify-content: space-between;
+  padding: 0 100px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  padding: 10px 0;
+}
+
+.title p:first-of-type {
+  font-size: 25px;
+  font-weight: 600; /* usar 600 en vez de "semi-bold" */
+}
+
+.title p:last-of-type {
+  font-size: 20px;
+  color: gray;
+}
+
+.options-header {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  list-style: none;
+}
+
+.options-header select {
+  font-size: 10px;
+}
+
+.options-header > li {
+  cursor: pointer;
+}

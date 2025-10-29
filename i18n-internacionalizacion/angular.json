@@ -1,0 +1,122 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "i18n-internacionalizacion": {
+      "i18n": {
+        "sourceLocale": "es-PE",
+        "locales": {
+          "en": "src/locale/messages.en.xlf",
+          "fr": "src/locale/messages.fr.xlf",
+          "de": "src/locale/messages.de.xlf",
+          "it": "src/locale/messages.it.xlf"
+        }
+      },
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "localize": true,
+            "i18nMissingTranslation": "ignore",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js", "@angular/localize/init"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.css"]
+          },
+          "configurations": {
+            "en": {
+              "localize": ["en"]
+            },
+            "fr": {
+              "localize": ["fr"]
+            },
+            "de": {
+              "localize": ["de"]
+            },
+            "it": {
+              "localize": ["it"]
+            },
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "en": {
+              "buildTarget": "i18n-internacionalizacion:build:en"
+            },
+            "fr": {
+              "buildTarget": "i18n-internacionalizacion:build:fr"
+            },
+            "de": {
+              "buildTarget": "i18n-internacionalizacion:build:de"
+            },
+            "it": {
+              "buildTarget": "i18n-internacionalizacion:build:it"
+            },
+            "production": {
+              "buildTarget": "i18n-internacionalizacion:build:production"
+            },
+            "development": {
+              "buildTarget": "i18n-internacionalizacion:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing",
+              "@angular/localize/init"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.css"]
+          }
+        }
+      }
+    }
+  }
+}

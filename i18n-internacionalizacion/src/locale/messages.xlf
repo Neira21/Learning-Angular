@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-PE" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7007886971375450145" datatype="html">
+        <source>Nuevo Smartphone Galaxy Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8268840592455641172" datatype="html">
+        <source>reseñas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7469849007392988928" datatype="html">
+        <source>Descripción del Producto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2286248212308425294" datatype="html">
+        <source> Smartphone de última generación con pantalla AMOLED de 6.7 pulgadas, procesador octa-core de alta velocidad, cámara triple de 108MP y batería de larga duración de 5000mAh. Incluye carga rápida de 65W y conectividad 5G. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4187097283204281891" datatype="html">
+        <source>Características principales</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8416913087783426069" datatype="html">
+        <source>Pantalla: 6.7&quot; AMOLED 120Hz</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2866801204390477976" datatype="html">
+        <source>Memoria: 256GB almacenamiento, 12GB RAM</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9098363180482959171" datatype="html">
+        <source>Cámara: Triple 108MP + 12MP + 5MP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8783042093151812578" datatype="html">
+        <source>Batería: 5000mAh con carga rápida 65W</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1793586641605488333" datatype="html">
+        <source>Conectividad: 5G, WiFi 6, Bluetooth 5.2</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7195222387488295327" datatype="html">
+        <source>Sistema: Android 14</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="552120881783525172" datatype="html">
+        <source>Agregar al Carrito</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4084598923277231817" datatype="html">
+        <source>Comprar Ahora</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6733642522098607899" datatype="html">
+        <source>♡ Favoritos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/body/body.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1376141893306524657" datatype="html">
+        <source>Documentación</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2379082776169073909" datatype="html">
+        <source>Acerca de</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7887018968865276322" datatype="html">
+        <source>Ejemplo de Internacionalización</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3445785648486860749" datatype="html">
+        <source>Aprendiendo a usar i18n, traducir textos y más</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
