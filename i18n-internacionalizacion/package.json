@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:windows": "ng build && copy serve.json dist\\i18n-internacionalizacion\\browser\\serve.json",
+    "build:linux": "ng build && cp serve.json dist/i18n-internacionalizacion/browser/serve.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

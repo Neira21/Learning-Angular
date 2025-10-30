@@ -10,14 +10,20 @@
   <ul class="options-header">
     <li i18n>Documentación</li>
     <li i18n>Acerca de</li>
-    <li>
-      <select>
-        <option value="es">ES-Pe</option>
-        <option value="en">EN</option>
-        <option value="fr">FR</option>
-        <option value="de">DE</option>
-        <option value="it">IT</option>
-      </select>
-    </li>
+
+    <select
+      class="language-selector"
+      #optionvalue
+      (change)="changeValue(optionvalue.value)"
+    >
+      @for(language of languages(); track language.code){
+      <option
+        [value]="language.code"
+        [selected]="language.code === currentLanguage()"
+      >
+        {{ language.name }}
+      </option>
+      }
+    </select>
   </ul>
 </header>
