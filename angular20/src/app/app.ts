@@ -14,17 +14,20 @@ import { role, rolesResponse } from './services/usersroles.service';
 import { ImagePokePipe } from './image-poke-pipe';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { EmojiSelector } from './components/emoji-selector/emoji-selector';
-
+import { Map } from './components/map/map';
+import { YoutubePlayer } from './components/youtube-player/youtube-player';
 @Component({
   selector: 'app-root',
   imports: [
     //RouterOutlet,
     FormsModule,
     TitleCasePipe,
+    Map,
     ImagePokePipe,
     AsyncPipe,
     //JsonPipe
     EmojiSelector,
+    YoutubePlayer,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
