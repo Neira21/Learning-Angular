@@ -1,6 +1,13 @@
 <section>
   <h2>Youtube-player works!</h2>
-  <div>
-    <youtube-player videoId="mVjYG9TSN88" loadApi="false" />
+  <div class="list-videos">
+    <!-- <youtube-player videoId="MPuK06zUIhc" loadApi="false" /> -->
+    @for (videoId of listVideos; track videoId.id) {
+      <youtube-player
+        [videoId]="videoId.id"
+        [height]="360"
+        [width]="540"
+      ></youtube-player>
+    }
   </div>
 </section>

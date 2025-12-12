@@ -5,10 +5,19 @@ section {
 }
 
 div {
+}
+
+.list-videos {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   border: 4px solid #14cb79;
   margin: 5px;
   height: 80vh;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  background-color: red;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
